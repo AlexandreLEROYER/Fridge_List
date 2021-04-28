@@ -1,13 +1,8 @@
 package com.example.model
 
-class Item {
-
-    var type = ""
-    var nom = ""
-    var qt = 0
-
-    class Item constructor(val type: String, val nom: String, val qt: Int){
-
-
-    }
-}
+data class Item (
+        val nom: String,
+        val marque: String,
+        val qt: Int,
+        //val img: String
+)
