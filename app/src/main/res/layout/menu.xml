@@ -4,21 +4,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#808080">
 
     <TextView
-        app:layout_constraintTop_toTopOf="100dp"
-        app:layout_constraintStart_toStartOf="TextView"
-        app:layout_constraintLeft_toLeftOf="layout_width/2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/textView"
-        android:layout_width="74dp"
+        android:layout_width="100dp"
         android:layout_height="23dp"
+        android:textSize="25dp"
+        android:autoSizeTextType="uniform"
         android:text="Fridge_List"
         tools:layout_editor_absoluteX="168dp"
         tools:layout_editor_absoluteY="16dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        app:layout_constraintTop_toTopOf="400dp"
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintBottom_toTopOf="@id/imageButton3"
         app:layout_constraintStart_toEndOf="TextView"
         android:layout_width="317dp"
         android:layout_height="359dp"
@@ -26,8 +30,8 @@
         tools:layout_editor_absoluteY="64dp" />
 
     <ImageButton
-        app:layout_constraintBottom_toBottomOf="200dp"
-        app:layout_constraintStart_toEndOf="RecyclerView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/divider2"
         android:id="@+id/imageButton3"
         android:layout_width="99dp"
         android:layout_height="102dp"
@@ -36,17 +40,29 @@
         android:adjustViewBounds="true"
         app:srcCompat="@drawable/iconfinder_refrigerator_2_753114"
         tools:layout_editor_absoluteX="42dp"
-        tools:layout_editor_absoluteY="580dp" />
+        tools:layout_editor_absoluteY="580dp"
+        tools:ignore="MissingConstraints" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        app:layout_constraintBottom_toBottomOf="200dp"
-        app:layout_constraintStart_toEndOf="RecyclerView"
+        app:layout_constraintStart_toEndOf="@id/divider2"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
         app:srcCompat="@android:drawable/ic_input_add"
         tools:layout_editor_absoluteX="296dp"
-        tools:layout_editor_absoluteY="604dp" />
+        tools:layout_editor_absoluteY="604dp"
+        tools:ignore="MissingConstraints" />
+
+    <View
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="#808080"
+        android:id="@+id/divider2"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="201dp"
+        tools:layout_editor_absoluteY="5dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
