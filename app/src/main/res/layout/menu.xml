@@ -12,8 +12,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/textView"
-        android:layout_width="100dp"
-        android:layout_height="23dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textSize="25dp"
         android:autoSizeTextType="uniform"
         android:text="Fridge_List"
@@ -23,8 +23,7 @@
     <androidx.recyclerview.widget.RecyclerView
         app:layout_constraintTop_toBottomOf="@id/textView"
         app:layout_constraintBottom_toTopOf="@id/imageButton3"
-        app:layout_constraintStart_toEndOf="TextView"
-        android:layout_width="317dp"
+        android:layout_width="match_parent"
         android:layout_height="359dp"
         tools:layout_editor_absoluteX="35dp"
         tools:layout_editor_absoluteY="64dp" />
@@ -32,6 +31,7 @@
     <ImageButton
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="@id/divider2"
+        app:layout_constraintBottom_toTopOf="@id/divider3"
         android:id="@+id/imageButton3"
         android:layout_width="99dp"
         android:layout_height="102dp"
@@ -46,9 +46,11 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         app:layout_constraintStart_toEndOf="@id/divider2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/divider3"
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:fabCustomSize="100dp"
         android:clickable="true"
         app:srcCompat="@android:drawable/ic_input_add"
         tools:layout_editor_absoluteX="296dp"
@@ -64,5 +66,16 @@
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="201dp"
         tools:layout_editor_absoluteY="5dp" />
+
+    <View
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#808080"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="728dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

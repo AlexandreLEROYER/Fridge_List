@@ -8,13 +8,17 @@
     android:background="#808080">
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton2"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="7dp"
         android:clickable="true"
-        app:srcCompat="@drawable/abc_vector_test"
-        tools:layout_editor_absoluteX="20dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintBottom_toTopOf="@+id/textView6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/abc_vector_test" />
 
     <androidx.recyclerview.widget.RecyclerView
         app:layout_constraintTop_toBottomOf="@id/divider"
@@ -44,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@id/floatingActionButton2"
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="?android:attr/listDivider"
+        android:background="#808080"
         tools:layout_editor_absoluteX="6dp"
         tools:layout_editor_absoluteY="85dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
