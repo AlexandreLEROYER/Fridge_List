@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fridge_list.R
 
 class ItemAdapter (private val list: MutableList<Item>) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
