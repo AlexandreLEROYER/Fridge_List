@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
                 }
             })
             nameList.setNegativeButton("Annuler", DialogInterface.OnClickListener { dialog, which ->
+
                 Toast.makeText(applicationContext, "Dommage", Toast.LENGTH_SHORT).show()
             })
             nameList.show()
