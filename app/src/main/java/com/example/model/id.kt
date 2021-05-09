@@ -12,31 +12,36 @@ const val PREFS_FILENAME = "com.example.fridge_list.prefs"
 
 class id : AppCompatActivity() {
 
-    lateinit var idUser : String
+    companion object {
 
-    fun receiveId(ActivityMain : Activity) : String? {
+        var idUser: String = "-1"
 
-        val sharedPreferences : SharedPreferences = ActivityMain.getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
-        var idUser : String = sharedPreferences.getString("identifiant", "-1").toString()
+        fun receiveId(ActivityMain: Activity) {
 
-        if (idUser == "-1") {
-            idUser = createId()
-            val editor = sharedPreferences.edit()
-            editor.putString("identifiant", idUser)
-            editor.apply()
-            Log.d("idUser", "On vient de le crée")
+            val sharedPreferences: SharedPreferences =
+                ActivityMain.getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
+            this.idUser = sharedPreferences.getString("identifiant", "-1").toString()
+
+            if (this.idUser == "-1") {
+                this.idUser = createId()
+                val editor = sharedPreferences.edit()
+                editor.putString("identifiant", this.idUser)
+                editor.apply()
+                Log.d("idUser", "On vient de le créer")
+            } else {
+                Log.d("idUser", "On le recup")
+            }
+            Log.d("idUser", this.idUser)
         }
-        else {
-            Log.d("idUser", "On le recup")
+
+        private fun createId(): String {
+            val ourUUID = UUID.randomUUID().toString()
+            Log.d("UUID", ourUUID)
+            return ourUUID
         }
-        Log.d("idUser", idUser)
-        return idUser
-    }
 
-    private fun createId(): String {
-        val ourUUID = UUID.randomUUID().toString()
-        Log.d("UUID", ourUUID)
-        return ourUUID
+        fun getId(): String {
+            return this.idUser
+        }
     }
-
 }

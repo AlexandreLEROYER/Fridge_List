@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
 import android.widget.TextView
-import com.example.controler.saveList
 import com.example.model.Item
-import com.example.model.id
 
 class ListActivity : AppCompatActivity() {
 

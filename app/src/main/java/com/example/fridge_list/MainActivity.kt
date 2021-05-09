@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.menu)
 
-        val idUser : String? = id().receiveId(this)
+        id.receiveId(this)
 
         val viewMenu : ImageButton = findViewById(R.id.imageButton3)
         viewMenu.setOnClickListener {
