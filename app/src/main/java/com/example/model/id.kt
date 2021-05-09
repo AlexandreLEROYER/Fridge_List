@@ -12,6 +12,8 @@ const val PREFS_FILENAME = "com.example.fridge_list.prefs"
 
 class id : AppCompatActivity() {
 
+    lateinit var idUser : String
+
     fun receiveId(ActivityMain : Activity) : String? {
 
         val sharedPreferences : SharedPreferences = ActivityMain.getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
@@ -36,6 +38,5 @@ class id : AppCompatActivity() {
         Log.d("UUID", ourUUID)
         return ourUUID
     }
-
 
 }
