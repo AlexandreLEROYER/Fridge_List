@@ -10,6 +10,9 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatDrawableManager.get
+import com.example.model.Item
+import com.example.model.id
 
 const val EXTRA_NAME = "com.example.fridge_list.NAME"
 
@@ -18,6 +21,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.menu)
+
+        val idUser : String? = id().receiveId(this)
 
         val viewMenu : ImageButton = findViewById(R.id.imageButton3)
         viewMenu.setOnClickListener {
@@ -52,8 +57,7 @@ class MainActivity : AppCompatActivity() {
                 }
             })
             nameList.setNegativeButton("Annuler", DialogInterface.OnClickListener { dialog, which ->
-
-                Toast.makeText(applicationContext, "Dommage", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Miskina", Toast.LENGTH_SHORT).show()
             })
             nameList.show()
 
