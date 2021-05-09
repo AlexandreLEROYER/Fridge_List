@@ -6,8 +6,14 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
 import android.widget.TextView
+import com.example.controler.saveList
+import com.example.model.Item
+import com.example.model.id
 
 class FrigoActivity : AppCompatActivity() {
+
+    lateinit var liste : ArrayList<Item>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.liste)
@@ -22,5 +28,9 @@ class FrigoActivity : AppCompatActivity() {
         val titleList = findViewById<TextView>(R.id.textView2).apply {
             text = "Frigo"
         }
+    }
+
+    fun recupList () {
+        var liste : ArrayList<Item>
     }
 }
