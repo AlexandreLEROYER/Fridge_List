@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@+id/textView6"
+        android:focusable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/abc_vector_test" />
@@ -29,7 +29,7 @@
         app:layout_constraintStart_toEndOf="@id/floatingActionButton2"
         app:layout_constraintBottom_toTopOf="@id/divider"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:autoSizeTextType="uniform"
         android:maxLines="1"
         tools:layout_editor_absoluteY="30dp"
