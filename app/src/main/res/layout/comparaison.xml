@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/recyclerView3" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerView5"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginEnd="20dp"
@@ -49,7 +49,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
-        app:layout_constraintEnd_toEndOf="@+id/recyclerView"
+        app:layout_constraintEnd_toEndOf="@+id/recyclerView5"
         app:layout_constraintStart_toStartOf="@+id/textView3"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -61,7 +61,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:text="Non-présent dans votre frigo"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerView2" />
 

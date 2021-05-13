@@ -10,17 +10,18 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatDrawableManager.get
-import com.example.model.Item
+import androidx.recyclerview.widget.RecyclerView
 import com.example.model.id
 
 const val EXTRA_NAME = "com.example.fridge_list.NAME"
-
-class MainActivity : AppCompatActivity() {
-
+data class Aliment(val name: String, val number: String)
+class MainActivity : AppCompatActivity(), AlimentAdapterListener {
+    private val adapter = AlimentAdapter(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.menu)
+        setUpRecyclerView()
+        populateRecycler()
 
         val idUser : String? = id().receiveId(this)
 
@@ -64,5 +65,28 @@ class MainActivity : AppCompatActivity() {
             Log.d("TAG", "ListAct")
         }
     }
-
+    private fun setUpRecyclerView() {
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerView5)
+        recyclerView.adapter = adapter
+    }
+    private fun populateRecycler() {
+        val aliments = getRandomList()
+        adapter.setData(aliments)
+    }
+    private fun getRandomList(): ArrayList<Aliment> {
+        val aliments = arrayListOf<Aliment>()
+        for (i in 0..10) {
+            val name = "${getName()} ${getName()}"
+            val number = "0${List(3) { ('0'..'9').random() }.joinToString("")}"
+            aliments.add(Aliment(name, number))
+        }
+        return aliments
+    }
+    private fun getName() = List(6) { ('a'..'z').random() }.joinToString("")
+    override fun onUserClicked(aliment: Aliment) {
+        Toast.makeText(this, "You cliked on : ${aliment.name}", Toast.LENGTH_LONG).show()
+    }
+}
+interface AlimentAdapterListener{
+    fun onUserClicked(name: Aliment)
 }
