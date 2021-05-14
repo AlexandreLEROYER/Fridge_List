@@ -11,10 +11,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatDrawableManager.get
+import androidx.lifecycle.Observer
+import com.example.controler.BDD
 import com.example.model.Item
 import com.example.model.id
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 const val EXTRA_NAME = "com.example.fridge_list.NAME"
+const val EXTRA_FRIGO = "com.example.fridge_list.FRIGO"
+const val EXTRA_LIST = "com.example.fridge_list.LIST"
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,13 +30,29 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.menu)
 
-        val idUser : String? = id().receiveId(this)
+        id.receiveId(this)
+
+        ///TEST///
+        var liste : ArrayList<Item> = ArrayList<Item>()
+        liste.add(Item(1, 5))
+        liste.add(Item(2, 3))
+        BDD.write(id.getId(), "Liste1", liste)
+        BDD.findName(1)
+        var listeUser : ArrayList<Item> = ArrayList<Item>()
+        BDD.read(id.getId(),"Liste1").observe(this, Observer { listeUserTemp ->
+            listeUser = listeUserTemp
+            Log.d("youpi", ""+listeUser)
+        })
+        ///FinTest///
 
         val viewMenu : ImageButton = findViewById(R.id.imageButton3)
         viewMenu.setOnClickListener {
-            val frigoIntent : Intent = Intent(this, FrigoActivity::class.java)
-            startActivity(frigoIntent)
-            Log.d("TAG", "FrigoAct")
+            BDD.read(id.getId(),"frigo").observe(this, Observer { listeUserTemp ->
+                val frigoIntent : Intent = Intent(this, FrigoActivity::class.java).apply {
+                    putExtra(EXTRA_FRIGO, listeUserTemp)
+                }
+                startActivity(frigoIntent)
+            })
         }
 
         val viewList : ImageButton = findViewById(R.id.floatingActionButton)
@@ -49,11 +73,14 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Il faut donner un nom gros", Toast.LENGTH_SHORT).show()
                 }
                 else{
-                    val listIntent : Intent = Intent(this, ListActivity::class.java).apply {
-                        putExtra(EXTRA_NAME, name)
-                    }
-                    startActivity(listIntent)
-                    Toast.makeText(applicationContext, "Liste créée bg", Toast.LENGTH_SHORT).show()
+                    BDD.read(id.getId(),name).observe(this, Observer { listeUserTemp ->
+                        val listIntent : Intent = Intent(this, ListActivity::class.java).apply {
+                            putExtra(EXTRA_LIST, listeUserTemp)
+                            putExtra(EXTRA_NAME, name)
+                        }
+                        startActivity(listIntent)
+                        Toast.makeText(applicationContext, "Liste créée bg", Toast.LENGTH_SHORT).show()
+                    })
                 }
             })
             nameList.setNegativeButton("Annuler", DialogInterface.OnClickListener { dialog, which ->

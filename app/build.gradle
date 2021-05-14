@@ -2,12 +2,15 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'com.google.gms.google-services'
+    id "org.jetbrains.kotlin.plugin.parcelize"
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'  //plugin Google Services
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
+/*apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'*/
 
 android {
     compileSdkVersion 30
@@ -40,6 +43,10 @@ android {
     packagingOptions {
         exclude("META-INF/*.kotlin_module")
     }
+
+    /*androidExtensions {
+        experimental = true
+    }*/
 }
 
 dependencies {
