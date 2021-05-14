@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity(), AlimentAdapterListener {
     }
     private fun setUpRecyclerView() {
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView5)
+
         recyclerView.adapter = adapter
     }
     private fun populateRecycler() {
@@ -76,13 +77,14 @@ class MainActivity : AppCompatActivity(), AlimentAdapterListener {
     private fun getRandomList(): ArrayList<Aliment> {
         val aliments = arrayListOf<Aliment>()
         for (i in 0..10) {
-            val name = "${getName()} ${getName()}"
-            val number = "0${List(3) { ('0'..'9').random() }.joinToString("")}"
+            val name = getName()
+            print("ça passe bien ici")
+            val number = "12"
             aliments.add(Aliment(name, number))
         }
         return aliments
     }
-    private fun getName() = List(6) { ('a'..'z').random() }.joinToString("")
+    private fun getName(): String {return("affiche toi s'il te plait")}
     override fun onUserClicked(aliment: Aliment) {
         Toast.makeText(this, "You cliked on : ${aliment.name}", Toast.LENGTH_LONG).show()
     }

@@ -68,6 +68,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
     //Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"

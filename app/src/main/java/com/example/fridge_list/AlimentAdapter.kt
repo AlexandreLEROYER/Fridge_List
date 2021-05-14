@@ -14,7 +14,9 @@ class AlimentAdapter(private val listener: AlimentAdapterListener) : RecyclerVie
     private var data: ArrayList<Aliment> = ArrayList()
     fun setData(data: ArrayList<Aliment>) {
         this.data = data
+        println(data.size)
         println(data)
+        println("SALUT")
         notifyDataSetChanged()
     }
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -38,6 +40,7 @@ class AlimentAdapter(private val listener: AlimentAdapterListener) : RecyclerVie
         /*holder.itemView.setOnClickListener { listener.onUserClicked(contact)*/ //}
     }
     override fun getItemCount(): Int {
+        println(data.size)
         return data.size
     }
 
