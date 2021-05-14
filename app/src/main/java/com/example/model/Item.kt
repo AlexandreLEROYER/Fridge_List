@@ -1,10 +1,10 @@
 package com.example.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Item (
-        var id : String,
-        var nom : String,
-        var marque : String,
-        var qt : Int,
-        var isChecked : Boolean,
-        //val img: String
-)
+        var id : Int = 0,
+        var qt : Int = 0
+) : Parcelable
