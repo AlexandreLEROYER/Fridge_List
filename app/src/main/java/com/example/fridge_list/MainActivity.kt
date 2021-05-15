@@ -10,11 +10,13 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.model.id
 
 const val EXTRA_NAME = "com.example.fridge_list.NAME"
-data class Aliment(val name: String, val number: String)
+data class Aliment(val infos: String)
 class MainActivity : AppCompatActivity(), AlimentAdapterListener {
     private val adapter = AlimentAdapter(this)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,26 +69,54 @@ class MainActivity : AppCompatActivity(), AlimentAdapterListener {
     }
     private fun setUpRecyclerView() {
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView5)
-
+        recyclerView.layoutManager = GridLayoutManager(this, 3)
         recyclerView.adapter = adapter
     }
     private fun populateRecycler() {
-        val aliments = getRandomList()
+        val aliments = getList()
         adapter.setData(aliments)
     }
-    private fun getRandomList(): ArrayList<Aliment> {
+    private fun getList(): ArrayList<Aliment> {
         val aliments = arrayListOf<Aliment>()
-        for (i in 0..10) {
+        //aliments.add(Aliment("Patate","12"))
+        aliments.add(Aliment("Patate :\n 12"))
+        aliments.add(Aliment("Tomate :\n 14"))
+        //aliments.add(Aliment("Haricots","200g"))
+        //aliments.add(Aliment("Fromage","100"))
+        aliments.add(Aliment("Riz :\n 2kg"))
+        aliments.add(Aliment("Patate :\n 12"))
+        aliments.add(Aliment("Tomate :\n 14"))
+        aliments.add(Aliment("Haricots :\n 200g"))
+        //aliments.add(Aliment("Fromage","100"))
+        aliments.add(Aliment("Riz :\n 2kg"))
+        aliments.add(Aliment("Patate :\n 12"))
+        aliments.add(Aliment("Tomate :\n 14"))
+        //aliments.add(Aliment("Haricots","200g"))
+        //aliments.add(Aliment("Fromage","100"))
+        aliments.add(Aliment("Riz :\n 2kg"))
+        //aliments.add(Aliment("SEMOULE :\n 500g"))
+        //aliments.add(Aliment("Orange","12"))
+        //aliments.add(Aliment("Patate","12"))
+        //aliments.add(Aliment("Tomate","14"))
+        //aliments.add(Aliment("Haricots","200g"))
+        //aliments.add(Aliment("Fromage","100"))
+        //aliments.add(Aliment("Riz","2kg"))
+        //aliments.add(Aliment("SEMOULE","500g"))
+        //aliments.add(Aliment("Orange","12"))
+        /*
+        for (i in 0..100) {
             val name = getName()
             print("ça passe bien ici")
             val number = "12"
             aliments.add(Aliment(name, number))
         }
+        */
         return aliments
     }
-    private fun getName(): String {return("affiche toi s'il te plait")}
     override fun onUserClicked(aliment: Aliment) {
-        Toast.makeText(this, "You cliked on : ${aliment.name}", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "You cliked on : ${aliment.infos}", Toast.LENGTH_SHORT).show()
+
+        println("onpasseici")
     }
 }
 interface AlimentAdapterListener{

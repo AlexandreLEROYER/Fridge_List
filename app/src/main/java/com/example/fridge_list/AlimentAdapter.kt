@@ -1,22 +1,18 @@
 package com.example.fridge_list
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 
 class AlimentAdapter(private val listener: AlimentAdapterListener) : RecyclerView.Adapter<AlimentAdapter.ViewHolder>() {
     private var data: ArrayList<Aliment> = ArrayList()
-    fun setData(data: ArrayList<Aliment>) {
+    fun setData(data: ArrayList<Aliment> ) {
         this.data = data
         println(data.size)
         println(data)
-        println("SALUT")
         notifyDataSetChanged()
     }
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -35,12 +31,11 @@ class AlimentAdapter(private val listener: AlimentAdapterListener) : RecyclerVie
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val aliment = data[position]
-        holder.texte.text = aliment.name
+        holder.texte.text = aliment.infos
         //holder.tvName.text = contact.name.capitalize(Locale.getDefault())
-        /*holder.itemView.setOnClickListener { listener.onUserClicked(contact)*/ //}
+        holder.itemView.setOnClickListener { listener.onUserClicked(aliment) }
     }
     override fun getItemCount(): Int {
-        println(data.size)
         return data.size
     }
 

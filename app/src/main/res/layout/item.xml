@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#808080">
+    android:orientation="horizontal"
+    android:padding="5dp"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    >
 
     <TextView
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:backgroundTint="#F8F8FF"
         android:id="@+id/alimentListe"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:maxLines="2"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:background="@color/white"/>
+
+    <TextView
+        android:id="@+id/alimentListeInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fridge List"
-        tools:layout_editor_absoluteX="168dp"
-        tools:layout_editor_absoluteY="16dp" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:text="TextView" />
+
+</RelativeLayout>
