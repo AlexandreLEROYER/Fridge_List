@@ -12,7 +12,7 @@ import com.example.model.id
 
 class FrigoActivity : AppCompatActivity() {
 
-    var listeUser : ArrayList<Item> = ArrayList<Item>()
+    lateinit var listeUser : ArrayList<Item>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
