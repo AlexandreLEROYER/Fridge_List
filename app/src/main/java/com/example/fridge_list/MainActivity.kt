@@ -13,22 +13,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatDrawableManager.get
 import androidx.lifecycle.Observer
 import com.example.controler.BDD
+import com.example.model.Ingredient
 import com.example.model.Item
 import com.example.model.id
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 
 const val EXTRA_NAME = "com.example.fridge_list.NAME"
 const val EXTRA_FRIGO = "com.example.fridge_list.FRIGO"
 const val EXTRA_LIST = "com.example.fridge_list.LIST"
 
-
-class MainActivity : AppCompatActivity() {
-
 data class Aliment(val name: String,val quantite: String)
+
 class MainActivity : AppCompatActivity(), AlimentAdapterListener {
     private val adapter = AlimentAdapter(this)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,16 +36,20 @@ class MainActivity : AppCompatActivity(), AlimentAdapterListener {
         id.receiveId(this)
 
         ///TEST///
-        var liste : ArrayList<Item> = ArrayList<Item>()
+        /*var liste : ArrayList<Item> = ArrayList<Item>()
         liste.add(Item(1, 5))
         liste.add(Item(2, 3))
         BDD.write(id.getId(), "Liste1", liste)
-        BDD.findName(1)
-        var listeUser : ArrayList<Item> = ArrayList<Item>()
+        var listeUser = ArrayList<Item>()
+        var listeIngredient = ArrayList<Ingredient>()
         BDD.read(id.getId(),"Liste1").observe(this, Observer { listeUserTemp ->
             listeUser = listeUserTemp
             Log.d("youpi", ""+listeUser)
         })
+        BDD.readIngredient().observe(this, Observer { listeIngredientTemp ->
+            listeIngredient = listeIngredientTemp
+            Log.d("youpi", ""+listeIngredient)
+        })*/
         ///FinTest///
 
         val viewMenu : ImageButton = findViewById(R.id.imageButton3)
@@ -114,19 +114,6 @@ class MainActivity : AppCompatActivity(), AlimentAdapterListener {
         aliments.add(Aliment("Haricots","200g"))
         aliments.add(Aliment("Fromage","100"))
 
-        //aliments.add(Aliment("Fromage","100"))
-        //aliments.add(Aliment("Haricots","200g"))
-        //aliments.add(Aliment("Fromage","100"))
-        //aliments.add(Aliment("SEMOULE :\n 500g"))
-        //aliments.add(Aliment("Orange","12"))
-        //aliments.add(Aliment("Patate","12"))
-        //aliments.add(Aliment("Tomate","14"))
-        //aliments.add(Aliment("Haricots","200g"))
-        //aliments.add(Aliment("Fromage","100"))
-        //aliments.add(Aliment("Riz","2kg"))
-        //aliments.add(Aliment("SEMOULE","500g"))
-        //aliments.add(Aliment("Orange","12"))
-
         /*for (i in 0..100) {
             val name = "tomate"
             val quantite = "12"
@@ -141,6 +128,6 @@ class MainActivity : AppCompatActivity(), AlimentAdapterListener {
         println("onpasseici")
     }
 }
-interface AlimentAdapterListener{
+interface AlimentAdapterListener {
     fun onUserClicked(name: Aliment)
 }

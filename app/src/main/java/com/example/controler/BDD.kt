@@ -1,8 +1,10 @@
 package com.example.controler
 
 import android.util.Log
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.model.Ingredient
 import com.example.model.Item
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.getValue
@@ -34,19 +36,38 @@ class BDD {
                 for (child in it.children){
                     var item : Item? = child.getValue(Item::class.java)
                     listeUserTemp.add(item!!)
-                    Log.d("yass", ""+listeUser)
                 }
                 listeUser.postValue(listeUserTemp)
             }
             return listeUser
         }
 
+        fun readIngredient() : LiveData<ArrayList<Ingredient>> {
+            var listeIngredient : MutableLiveData<ArrayList<Ingredient>> = MutableLiveData()
+            var listeUserTemp = ArrayList<Ingredient>()
+            ref.child("fruit").get().addOnSuccessListener {
+                for (child in it.children){
+                    var ingredientFruit : Ingredient? = child.getValue(Ingredient::class.java)
+                    listeUserTemp.add(ingredientFruit!!)
+                }
+                ref.child("legume").get().addOnSuccessListener {
+                    for (child in it.children) {
+                        var ingredientLegume: Ingredient? = child.getValue(Ingredient::class.java)
+                        listeUserTemp.add(ingredientLegume!!)
+                    }
+                    listeIngredient.postValue(listeUserTemp)
+                }
+            }
+            return listeIngredient
+        }
+
         fun remove(idUser: String, nameList: String) {
             ref.child("user").child(idUser).child(nameList).removeValue()
         }
 
-        fun findName(id: Int) : String {
+        /*fun findName(id: Int) : String {
             var name : String = ""
+            var i = 0
             var chemin : String = ""
             chemin = if (id < 50)
                 "legume"
@@ -61,7 +82,6 @@ class BDD {
                 Log.d("idItem", "Echec")
             }
             return name
-        }
+        }*/
     }
-
 }

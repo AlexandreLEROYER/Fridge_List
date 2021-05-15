@@ -34,22 +34,19 @@ class ListActivity : AppCompatActivity() {
             Log.d("TAG", "FrigoAct")
         }
 
-        val supp : ImageButton = findViewById(R.id.floatingActionButton3)
-        supp.setOnClickListener {
+        val btnDel : ImageButton = findViewById(R.id.floatingActionButton3)
+        btnDel.setOnClickListener {
             BDD.remove(id.getId(), name)
             val mainIntent : Intent = Intent(this, MainActivity::class.java)
             startActivity(mainIntent)
             Log.d("TAG", "FrigoAct")
         }
-        val gofrigo : ImageButton = findViewById(R.id.floatingActionButton5)
-        gofrigo.setOnClickListener {
+        val btnIngre : ImageButton = findViewById(R.id.floatingActionButton5)
+        btnIngre.setOnClickListener {
             val ingredientintent : Intent = Intent(this, IngredientsActivity::class.java)
             startActivity(ingredientintent)
             Log.d("TAG", "IngreAct")
         }
 
-    }
-    fun recupList () {
-        var liste : ArrayList<Item>
     }
 }
