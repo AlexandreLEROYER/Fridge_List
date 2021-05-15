@@ -33,5 +33,13 @@ class ListActivity : AppCompatActivity() {
             startActivity(mainIntent)
             Log.d("TAG", "FrigoAct")
         }
+
+        val supp : ImageButton = findViewById(R.id.floatingActionButton3)
+        supp.setOnClickListener {
+            BDD.remove(id.getId(), name)
+            val mainIntent : Intent = Intent(this, MainActivity::class.java)
+            startActivity(mainIntent)
+            Log.d("TAG", "FrigoAct")
+        }
     }
 }
