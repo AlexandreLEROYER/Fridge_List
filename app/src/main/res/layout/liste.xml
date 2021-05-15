@@ -73,6 +73,7 @@
 
     <View
         android:id="@+id/divider5"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="1dp"
@@ -82,7 +83,6 @@
 
     <View
         android:visibility="gone"
-
         android:id="@+id/divider6"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

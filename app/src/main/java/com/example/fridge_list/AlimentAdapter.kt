@@ -17,8 +17,10 @@ class AlimentAdapter(private val listener: AlimentAdapterListener) : RecyclerVie
     }
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val texte: TextView
+        val quantite : TextView
         init{
             texte = view.findViewById(R.id.alimentListe)
+            quantite = view.findViewById(R.id.alimentListeInfo)
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,7 +33,8 @@ class AlimentAdapter(private val listener: AlimentAdapterListener) : RecyclerVie
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val aliment = data[position]
-        holder.texte.text = aliment.infos
+        holder.texte.text = aliment.name
+        holder.quantite.text = aliment.quantite
         //holder.tvName.text = contact.name.capitalize(Locale.getDefault())
         holder.itemView.setOnClickListener { listener.onUserClicked(aliment) }
     }
