@@ -41,5 +41,15 @@ class ListActivity : AppCompatActivity() {
             startActivity(mainIntent)
             Log.d("TAG", "FrigoAct")
         }
+        val gofrigo : ImageButton = findViewById(R.id.floatingActionButton5)
+        gofrigo.setOnClickListener {
+            val ingredientintent : Intent = Intent(this, IngredientsActivity::class.java)
+            startActivity(ingredientintent)
+            Log.d("TAG", "IngreAct")
+        }
+
+    }
+    fun recupList () {
+        var liste : ArrayList<Item>
     }
 }

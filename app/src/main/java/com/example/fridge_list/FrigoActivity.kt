@@ -12,7 +12,7 @@ import com.example.model.id
 
 class FrigoActivity : AppCompatActivity() {
 
-    var listeUser : ArrayList<Item> = ArrayList<Item>()
+    lateinit var liste : ArrayList<Item>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,5 +32,9 @@ class FrigoActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.textView2).apply {
             text = "Frigo"
         }
+    }
+
+    fun recupList () {
+        var liste : ArrayList<Item>
     }
 }
