@@ -41,6 +41,10 @@ class BDD {
             return listeUser
         }
 
+        fun remove(idUser: String, nameList: String) {
+            ref.child("user").child(idUser).child(nameList).removeValue()
+        }
+
         fun findName(id: Int) : String {
             var name : String = ""
             var chemin : String = ""
