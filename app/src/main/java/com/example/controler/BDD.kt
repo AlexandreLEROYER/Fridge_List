@@ -46,6 +46,7 @@ class BDD {
         fun readIngredient() : LiveData<ArrayList<Ingredient>> {
             var listeIngredient : MutableLiveData<ArrayList<Ingredient>> = MutableLiveData()
             var listeUserTemp = ArrayList<Ingredient>()
+
             ref.child("fruit").get().addOnSuccessListener {
                 for (child in it.children){
                     var ingredientFruit : Ingredient? = child.getValue(Ingredient::class.java)
@@ -65,6 +66,19 @@ class BDD {
 
         fun remove(idUser: String, nameList: String) {
             ref.child("user").child(idUser).child(nameList).removeValue()
+        }
+
+        fun findList(idUser: String) : LiveData<ArrayList<String>> {
+            var listeUser : MutableLiveData<ArrayList<String>> = MutableLiveData()
+            var listeUserTemp = ArrayList<String>()
+
+            ref.child("user").child(idUser).get().addOnSuccessListener {
+                for(child in it.children){
+                    listeUserTemp.add(child.key.toString())
+                }
+                listeUser.postValue(listeUserTemp)
+            }
+            return listeUser
         }
 
         fun findName(id: Int) : Ingredient {
