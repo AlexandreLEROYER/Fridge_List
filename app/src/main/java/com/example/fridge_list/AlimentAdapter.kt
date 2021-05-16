@@ -48,4 +48,5 @@ class AlimentAdapter(private val listener: AlimentAdapterListener) : RecyclerVie
         return data.size
     }
 
+
 }

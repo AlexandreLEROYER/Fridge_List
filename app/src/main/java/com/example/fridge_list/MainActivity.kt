@@ -22,9 +22,8 @@ const val EXTRA_FRIGO = "com.example.fridge_list.FRIGO"
 const val EXTRA_LIST = "com.example.fridge_list.LIST"
 
 
-class MainActivity : AppCompatActivity(), AlimentAdapterListener {
+class MainActivity : AppCompatActivity() {
 
-    private val adapter = AlimentAdapter(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.menu)
@@ -50,8 +49,6 @@ class MainActivity : AppCompatActivity(), AlimentAdapterListener {
         ///FinTest///
     }
     fun suiteProg() {
-        setUpRecyclerView()
-        populateRecycler()
         val viewMenu : ImageButton = findViewById(R.id.imageButton3)
         viewMenu.setOnClickListener {
             BDD.read(id.getId(),"frigo").observe(this, Observer { listeUserTemp ->
@@ -98,37 +95,10 @@ class MainActivity : AppCompatActivity(), AlimentAdapterListener {
             Log.d("TAG", "ListAct")
         }
     }
-    private fun setUpRecyclerView() {
-        val recyclerView: RecyclerView = findViewById(R.id.recyclerView5)
-        recyclerView.layoutManager = GridLayoutManager(this, 3)
-        recyclerView.adapter = adapter
-    }
-    private fun populateRecycler() {
-        val aliments = getList()
-        adapter.setData(aliments)
-    }
-    private fun getList(): ArrayList<Item> {
-        val aliments = ArrayList<Item>()
-        aliments.add(Item(3,100))
-        aliments.add(Item(2,50))
-        aliments.add(Item(1,20))
-        aliments.add(Item(53,1100))
-        aliments.add(Item(52,150))
-        aliments.add(Item(51,210))
-        /*for (i in 0..100) {
-            val name = "tomate"
-            val quantite = "12"
-            aliments.add(Aliment(name, quantite))
-        }
-        */
-        return aliments
-    }
-    override fun onUserClicked(item: Item) {
-        Toast.makeText(this, "You cliked on : ${item.id}", Toast.LENGTH_SHORT).show()
 
-        println("onpasseici")
-    }
+
 }
 interface AlimentAdapterListener {
     fun onUserClicked(name: Item)
 }
+
