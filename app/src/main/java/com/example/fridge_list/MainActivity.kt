@@ -21,7 +21,6 @@ const val EXTRA_NAME = "com.example.fridge_list.NAME"
 const val EXTRA_FRIGO = "com.example.fridge_list.FRIGO"
 const val EXTRA_LIST = "com.example.fridge_list.LIST"
 
-data class Aliment(val name: Int,val quantite: Int)
 
 class MainActivity : AppCompatActivity(), AlimentAdapterListener {
 
@@ -29,7 +28,6 @@ class MainActivity : AppCompatActivity(), AlimentAdapterListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.menu)
-
         id.receiveId(this)
 
         ///TEST///

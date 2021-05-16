@@ -1,12 +1,15 @@
 package com.example.fridge_list
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageButton
 import android.widget.SearchView
 import androidx.lifecycle.Observer
 import com.example.controler.BDD
 import com.example.model.Ingredient
+import com.example.model.id
 
 class IngredientsActivity : AppCompatActivity() {
 
@@ -21,6 +24,13 @@ class IngredientsActivity : AppCompatActivity() {
 
         listeSearch = search("ma")
         Log.d("youpi", ""+listeSearch)
+
+        val returnMenu : ImageButton = findViewById(R.id.floatingActionButton2)
+        returnMenu.setOnClickListener {
+            val mainIntent : Intent = Intent(this, MainActivity::class.java)
+            startActivity(mainIntent)
+            Log.d("TAG", "IngreAct")
+        }
 
         var search : SearchView = findViewById(R.id.search)
     }
