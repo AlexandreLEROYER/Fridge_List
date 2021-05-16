@@ -17,7 +17,7 @@ class IngredientsActivity : AppCompatActivity() {
         setContentView(R.layout.ingredients)
 
         var espoire = BDD.findName(1)
-        Log.d("Leboncul", ""+espoire)
+        Log.d("Leboncul", ""+espoire.nom)
 
         listeSearch = search("ma")
         Log.d("youpi", ""+listeSearch)
