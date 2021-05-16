@@ -1,16 +1,20 @@
 package com.example.fridge_list
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.controler.BDD
+import com.example.model.Item
+import com.google.api.LogDescriptor
 
 class AlimentAdapter(private val listener: AlimentAdapterListener) : RecyclerView.Adapter<AlimentAdapter.ViewHolder>() {
-    private var data: ArrayList<Aliment> = ArrayList()
-    fun setData(data: ArrayList<Aliment> ) {
+    private var data: ArrayList<Item> = ArrayList<Item>()
+    fun setData(data: ArrayList<Item> ) {
         this.data = data
+        Log.d("DATA",""+data)
         println(data.size)
         println(data)
         notifyDataSetChanged()
@@ -32,11 +36,13 @@ class AlimentAdapter(private val listener: AlimentAdapterListener) : RecyclerVie
         //)
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val aliment = data[position]
-        holder.texte.text = aliment.name
-        holder.quantite.text = aliment.quantite
+        val item = data[position]
+        var entretemps = BDD.findName(item.id)
+        Log.d("MDR", ""+BDD.listeIngredientAll)
+        holder.quantite.text = item.qt.toString()
+        holder.texte.text = entretemps.nom
         //holder.tvName.text = contact.name.capitalize(Locale.getDefault())
-        holder.itemView.setOnClickListener { listener.onUserClicked(aliment) }
+        holder.itemView.setOnClickListener { listener.onUserClicked(item) }
     }
     override fun getItemCount(): Int {
         return data.size

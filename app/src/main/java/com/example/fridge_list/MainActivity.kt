@@ -10,10 +10,8 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatDrawableManager.get
 import androidx.lifecycle.Observer
 import com.example.controler.BDD
-import com.example.model.Ingredient
 import com.example.model.Item
 import com.example.model.id
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,7 +21,7 @@ const val EXTRA_NAME = "com.example.fridge_list.NAME"
 const val EXTRA_FRIGO = "com.example.fridge_list.FRIGO"
 const val EXTRA_LIST = "com.example.fridge_list.LIST"
 
-data class Aliment(val name: String,val quantite: String)
+data class Aliment(val name: Int,val quantite: Int)
 
 class MainActivity : AppCompatActivity(), AlimentAdapterListener {
 
@@ -31,8 +29,6 @@ class MainActivity : AppCompatActivity(), AlimentAdapterListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.menu)
-        setUpRecyclerView()
-        populateRecycler()
 
         id.receiveId(this)
 
@@ -56,6 +52,8 @@ class MainActivity : AppCompatActivity(), AlimentAdapterListener {
         ///FinTest///
     }
     fun suiteProg() {
+        setUpRecyclerView()
+        populateRecycler()
         val viewMenu : ImageButton = findViewById(R.id.imageButton3)
         viewMenu.setOnClickListener {
             BDD.read(id.getId(),"frigo").observe(this, Observer { listeUserTemp ->
@@ -111,13 +109,14 @@ class MainActivity : AppCompatActivity(), AlimentAdapterListener {
         val aliments = getList()
         adapter.setData(aliments)
     }
-    private fun getList(): ArrayList<Aliment> {
-        val aliments = arrayListOf<Aliment>()
-        aliments.add(Aliment("Patate","12"))
-
-        aliments.add(Aliment("Haricots","200g"))
-        aliments.add(Aliment("Fromage","100"))
-
+    private fun getList(): ArrayList<Item> {
+        val aliments = ArrayList<Item>()
+        aliments.add(Item(3,100))
+        aliments.add(Item(2,50))
+        aliments.add(Item(1,20))
+        aliments.add(Item(53,1100))
+        aliments.add(Item(52,150))
+        aliments.add(Item(51,210))
         /*for (i in 0..100) {
             val name = "tomate"
             val quantite = "12"
@@ -126,12 +125,12 @@ class MainActivity : AppCompatActivity(), AlimentAdapterListener {
         */
         return aliments
     }
-    override fun onUserClicked(aliment: Aliment) {
-        Toast.makeText(this, "You cliked on : ${aliment.name}", Toast.LENGTH_SHORT).show()
+    override fun onUserClicked(item: Item) {
+        Toast.makeText(this, "You cliked on : ${item.id}", Toast.LENGTH_SHORT).show()
 
         println("onpasseici")
     }
 }
 interface AlimentAdapterListener {
-    fun onUserClicked(name: Aliment)
+    fun onUserClicked(name: Item)
 }
