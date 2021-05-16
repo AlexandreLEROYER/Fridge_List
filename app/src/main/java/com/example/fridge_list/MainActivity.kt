@@ -26,7 +26,6 @@ const val EXTRA_LIST = "com.example.fridge_list.LIST"
 data class Aliment(val name: String,val quantite: String)
 
 class MainActivity : AppCompatActivity(), AlimentAdapterListener {
-
     private val adapter = AlimentAdapter(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,20 +41,20 @@ class MainActivity : AppCompatActivity(), AlimentAdapterListener {
         liste.add(Item(2, 3))
         BDD.write(id.getId(), "Liste1", liste)
         var listeUser = ArrayList<Item>()
-
+        var listeIngredient = ArrayList<Ingredient>()
         BDD.read(id.getId(),"Liste1").observe(this, Observer { listeUserTemp ->
             listeUser = listeUserTemp
             Log.d("youpi", ""+listeUser)
+        })*/
+        var listeIngredient = ArrayList<Ingredient>()
+        BDD.readIngredient().observe(this, Observer { listeIngredientTemp ->
+            listeIngredient = listeIngredientTemp
+            findName(1, listeIngredient)
         })
 
-        })*/
-        BDD.readIngredient().observe(this, Observer { listeIngredientTemp ->
-            Log.d("youpi", ""+BDD.listeIngredientAll)
-            suiteProg()
-        })
+        Log.d("youpi", ""+listeIngredient)
         ///FinTest///
-    }
-    fun suiteProg() {
+
         val viewMenu : ImageButton = findViewById(R.id.imageButton3)
         viewMenu.setOnClickListener {
             BDD.read(id.getId(),"frigo").observe(this, Observer { listeUserTemp ->
@@ -130,6 +129,17 @@ class MainActivity : AppCompatActivity(), AlimentAdapterListener {
         Toast.makeText(this, "You cliked on : ${aliment.name}", Toast.LENGTH_SHORT).show()
 
         println("onpasseici")
+    }
+
+    fun findName(id: Int, listeIngredient : ArrayList<Ingredient>) : String {
+        var name : String = ""
+        for (ingredient in listeIngredient){
+            if(id == ingredient.id){
+                name = ingredient.nom
+                Log.d("espoire", name)
+            }
+        }
+        return name
     }
 }
 interface AlimentAdapterListener {
