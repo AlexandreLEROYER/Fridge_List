@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.controler.BDD
@@ -22,7 +23,7 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.liste)
         setUpRecyclerViewDeList()
-        populateRecyclerDeList()
+
         listeUser = intent.getParcelableArrayListExtra<Item>(EXTRA_LIST) as ArrayList<Item>
         Log.d("Listtt", ""+listeUser)
 
@@ -30,7 +31,7 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
         findViewById<TextView>(R.id.textView2).apply {
             text = name
         }
-
+        populateRecyclerDeList(name)
         val returnMenu : ImageButton = findViewById(R.id.floatingActionButton2)
         returnMenu.setOnClickListener {
             BDD.write(id.getId(), name, listeUser)
@@ -60,9 +61,10 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
         recyclerView.layoutManager = GridLayoutManager(this, 3)
         recyclerView.adapter = adapter
     }
-    private fun populateRecyclerDeList() {
-        val aliments = getList()
-        adapter.setData(aliments)
+    private fun populateRecyclerDeList(name : String) {
+        BDD.read(id.getId(),name).observe(this, Observer { listeUserTemp ->
+            adapter.setData(listeUserTemp)
+        })
     }
     private fun getList(): ArrayList<Item> {
         val aliments = ArrayList<Item>()

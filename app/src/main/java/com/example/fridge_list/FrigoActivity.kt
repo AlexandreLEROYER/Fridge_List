@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.controler.BDD
@@ -45,10 +46,13 @@ class FrigoActivity : AppCompatActivity(), AlimentAdapterListener {
         recyclerView.adapter = adapter
     }
     private fun populateRecyclerDeFrigo() {
-        val aliments = getList()
-        adapter.setData(aliments)
+        //val aliments = getList()
+        BDD.read(id.getId(),"frigo").observe(this, Observer { listeUserTemp ->
+            adapter.setData(listeUserTemp)
+        })
+        //adapter.setData(aliments)
     }
-    private fun getList(): ArrayList<Item> {
+/*    private fun getList(): ArrayList<Item> {
         val aliments = ArrayList<Item>()
         aliments.add(Item(3,100))
         aliments.add(Item(2,50))
@@ -58,7 +62,7 @@ class FrigoActivity : AppCompatActivity(), AlimentAdapterListener {
         aliments.add(Item(51,210))
 
         return aliments
-    }
+    }*/
     override fun onUserClicked(item: Item) {
         Toast.makeText(this, "You cliked on : ${item.id}", Toast.LENGTH_SHORT).show()
 

@@ -6,20 +6,28 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.controler.BDD
 import com.example.model.Ingredient
+import com.example.model.Item
 import com.example.model.id
 
-class IngredientsActivity : AppCompatActivity() {
+class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
 
     var listeSearch = ArrayList<Ingredient>()
+    private val adapter = IngredientAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.ingredients)
+        setUpRecyclerViewDeIngredient()
 
+        populateRecyclerDeIngredient()
         var espoire = BDD.findName(1)
+
         Log.d("Leboncul", ""+espoire.nom)
 
         listeSearch = search("ma")
@@ -44,4 +52,22 @@ class IngredientsActivity : AppCompatActivity() {
         }
         return listeSearch
     }
+
+    private fun setUpRecyclerViewDeIngredient() {
+        val recyclerView: RecyclerView = findViewById(R.id.recycleringredient)
+        recyclerView.layoutManager = GridLayoutManager(this, 3)
+        recyclerView.adapter = adapter
+    }
+    private fun populateRecyclerDeIngredient() {
+        adapter.setData(getList())
+    }
+    private fun getList(): ArrayList<Ingredient> {
+        return BDD.listeIngredientAll
+    }
+    override fun onUserClicked(ingredient: Ingredient) {
+        //Toast.makeText(this, "You clicked on : $ingredient", Toast.LENGTH_SHORT).show()
+
+        println("onpasseici")
+    }
+
 }
