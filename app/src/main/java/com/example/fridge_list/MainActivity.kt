@@ -26,6 +26,7 @@ const val EXTRA_LIST = "com.example.fridge_list.LIST"
 data class Aliment(val name: String,val quantite: String)
 
 class MainActivity : AppCompatActivity(), AlimentAdapterListener {
+
     private val adapter = AlimentAdapter(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,17 +42,20 @@ class MainActivity : AppCompatActivity(), AlimentAdapterListener {
         liste.add(Item(2, 3))
         BDD.write(id.getId(), "Liste1", liste)
         var listeUser = ArrayList<Item>()
-        var listeIngredient = ArrayList<Ingredient>()
+
         BDD.read(id.getId(),"Liste1").observe(this, Observer { listeUserTemp ->
             listeUser = listeUserTemp
             Log.d("youpi", ""+listeUser)
         })
-        BDD.readIngredient().observe(this, Observer { listeIngredientTemp ->
-            listeIngredient = listeIngredientTemp
-            Log.d("youpi", ""+listeIngredient)
-        })*/
-        ///FinTest///
 
+        })*/
+        BDD.readIngredient().observe(this, Observer { listeIngredientTemp ->
+            Log.d("youpi", ""+BDD.listeIngredientAll)
+            suiteProg()
+        })
+        ///FinTest///
+    }
+    fun suiteProg() {
         val viewMenu : ImageButton = findViewById(R.id.imageButton3)
         viewMenu.setOnClickListener {
             BDD.read(id.getId(),"frigo").observe(this, Observer { listeUserTemp ->

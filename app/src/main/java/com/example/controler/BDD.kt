@@ -23,6 +23,7 @@ class BDD {
 
         var database: FirebaseDatabase = FirebaseDatabase.getInstance("https://fridge-list-7c029-default-rtdb.europe-west1.firebasedatabase.app/")
         var ref = database.reference
+        var listeIngredientAll = ArrayList<Ingredient>()
 
         fun write(idUser: String, nameList: String, liste: ArrayList<Item>) {
             ref.child("user").child(idUser).child(nameList).removeValue()
@@ -55,6 +56,7 @@ class BDD {
                         var ingredientLegume: Ingredient? = child.getValue(Ingredient::class.java)
                         listeUserTemp.add(ingredientLegume!!)
                     }
+                    listeIngredientAll = listeUserTemp
                     listeIngredient.postValue(listeUserTemp)
                 }
             }
@@ -65,23 +67,13 @@ class BDD {
             ref.child("user").child(idUser).child(nameList).removeValue()
         }
 
-        /*fun findName(id: Int) : String {
-            var name : String = ""
-            var i = 0
-            var chemin : String = ""
-            chemin = if (id < 50)
-                "legume"
-            else
-                "fruit"
-
-            ref.child(chemin).child(id.toString()).get().addOnSuccessListener {
-                name = it.value.toString()
-                Log.d("idItem", it.value.toString())
-            }.addOnFailureListener {
-                name = "Error"
-                Log.d("idItem", "Echec")
+        fun findName(id: Int) : Ingredient {
+            for(ingredient in listeIngredientAll){
+                if(ingredient.id == id){
+                    return ingredient
+                }
             }
-            return name
-        }*/
+            return Ingredient()
+        }
     }
 }

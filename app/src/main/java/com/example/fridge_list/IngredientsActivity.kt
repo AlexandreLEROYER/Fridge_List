@@ -10,16 +10,15 @@ import com.example.model.Ingredient
 
 class IngredientsActivity : AppCompatActivity() {
 
-    var listeIngredient = ArrayList<Ingredient>()
     var listeSearch = ArrayList<Ingredient>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.ingredients)
 
-        BDD.readIngredient().observe(this, Observer { listeIngredientTemp ->
-            listeIngredient = listeIngredientTemp
-        })
+        var espoire = BDD.findName(1)
+        Log.d("Leboncul", ""+espoire)
+
         listeSearch = search("ma")
         Log.d("youpi", ""+listeSearch)
 
@@ -28,7 +27,7 @@ class IngredientsActivity : AppCompatActivity() {
 
     fun search(name : String) : ArrayList<Ingredient> {
         var listeSearch = ArrayList<Ingredient>()
-        for (ingredient in listeIngredient){
+        for (ingredient in BDD.listeIngredientAll){
             if (ingredient.nom.startsWith(name)){
                 listeSearch.add(ingredient)
             }
