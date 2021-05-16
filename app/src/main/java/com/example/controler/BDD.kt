@@ -15,7 +15,6 @@ import kotlinx.coroutines.runBlocking
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-import androidx.lifecycle.Observer
 
 
 class BDD {
@@ -24,6 +23,7 @@ class BDD {
 
         var database: FirebaseDatabase = FirebaseDatabase.getInstance("https://fridge-list-7c029-default-rtdb.europe-west1.firebasedatabase.app/")
         var ref = database.reference
+        var listeIngredientAll = ArrayList<Ingredient>()
 
         fun write(idUser: String, nameList: String, liste: ArrayList<Item>) {
             ref.child("user").child(idUser).child(nameList).removeValue()
@@ -46,6 +46,7 @@ class BDD {
         fun readIngredient() : LiveData<ArrayList<Ingredient>> {
             var listeIngredient : MutableLiveData<ArrayList<Ingredient>> = MutableLiveData()
             var listeUserTemp = ArrayList<Ingredient>()
+
             ref.child("fruit").get().addOnSuccessListener {
                 for (child in it.children){
                     var ingredientFruit : Ingredient? = child.getValue(Ingredient::class.java)
@@ -56,6 +57,7 @@ class BDD {
                         var ingredientLegume: Ingredient? = child.getValue(Ingredient::class.java)
                         listeUserTemp.add(ingredientLegume!!)
                     }
+                    listeIngredientAll = listeUserTemp
                     listeIngredient.postValue(listeUserTemp)
                 }
             }
@@ -66,23 +68,26 @@ class BDD {
             ref.child("user").child(idUser).child(nameList).removeValue()
         }
 
-        fun findName(id: Int) : String {
-            var name : String = ""
-            /*var i = 0
-            var listeIngredient = ArrayList<Ingredient>()
+        fun findList(idUser: String) : LiveData<ArrayList<String>> {
+            var listeUser : MutableLiveData<ArrayList<String>> = MutableLiveData()
+            var listeUserTemp = ArrayList<String>()
 
-            for (ingredient in listeIngredient){
-
+            ref.child("user").child(idUser).get().addOnSuccessListener {
+                for(child in it.children){
+                    listeUserTemp.add(child.key.toString())
+                }
+                listeUser.postValue(listeUserTemp)
             }
+            return listeUser
+        }
 
-            ref.child(chemin).child(id.toString()).get().addOnSuccessListener {
-                name = it.value.toString()
-                Log.d("idItem", it.value.toString())
-            }.addOnFailureListener {
-                name = "Error"
-                Log.d("idItem", "Echec")
-            }*/
-            return name
+        fun findName(id: Int) : Ingredient {
+            for(ingredient in listeIngredientAll){
+                if(ingredient.id == id){
+                    return ingredient
+                }
+            }
+            return Ingredient()
         }
     }
 }
