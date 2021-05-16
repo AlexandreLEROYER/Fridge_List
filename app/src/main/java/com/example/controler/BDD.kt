@@ -15,6 +15,7 @@ import kotlinx.coroutines.runBlocking
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import androidx.lifecycle.Observer
 
 
 class BDD {
@@ -65,14 +66,14 @@ class BDD {
             ref.child("user").child(idUser).child(nameList).removeValue()
         }
 
-        /*fun findName(id: Int) : String {
+        fun findName(id: Int) : String {
             var name : String = ""
-            var i = 0
-            var chemin : String = ""
-            chemin = if (id < 50)
-                "legume"
-            else
-                "fruit"
+            /*var i = 0
+            var listeIngredient = ArrayList<Ingredient>()
+
+            for (ingredient in listeIngredient){
+
+            }
 
             ref.child(chemin).child(id.toString()).get().addOnSuccessListener {
                 name = it.value.toString()
@@ -80,8 +81,8 @@ class BDD {
             }.addOnFailureListener {
                 name = "Error"
                 Log.d("idItem", "Echec")
-            }
+            }*/
             return name
-        }*/
+        }
     }
 }

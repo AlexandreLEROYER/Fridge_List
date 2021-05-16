@@ -45,11 +45,14 @@ class MainActivity : AppCompatActivity(), AlimentAdapterListener {
         BDD.read(id.getId(),"Liste1").observe(this, Observer { listeUserTemp ->
             listeUser = listeUserTemp
             Log.d("youpi", ""+listeUser)
-        })
+        })*/
+        var listeIngredient = ArrayList<Ingredient>()
         BDD.readIngredient().observe(this, Observer { listeIngredientTemp ->
             listeIngredient = listeIngredientTemp
-            Log.d("youpi", ""+listeIngredient)
-        })*/
+            findName(1, listeIngredient)
+        })
+
+        Log.d("youpi", ""+listeIngredient)
         ///FinTest///
 
         val viewMenu : ImageButton = findViewById(R.id.imageButton3)
@@ -126,6 +129,17 @@ class MainActivity : AppCompatActivity(), AlimentAdapterListener {
         Toast.makeText(this, "You cliked on : ${aliment.name}", Toast.LENGTH_SHORT).show()
 
         println("onpasseici")
+    }
+
+    fun findName(id: Int, listeIngredient : ArrayList<Ingredient>) : String {
+        var name : String = ""
+        for (ingredient in listeIngredient){
+            if(id == ingredient.id){
+                name = ingredient.nom
+                Log.d("espoire", name)
+            }
+        }
+        return name
     }
 }
 interface AlimentAdapterListener {
