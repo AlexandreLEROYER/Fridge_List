@@ -71,9 +71,7 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
     }
 
     private fun populateRecyclerDeList(name : String) {
-        BDD.read(id.getId(),name).observe(this, Observer { listeUserTemp ->
-            adapter.setData(listeUserTemp)
-        })
+        adapter.setData(listeUser)
     }
 
     override fun onUserClicked(item: Item) {

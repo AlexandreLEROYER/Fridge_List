@@ -22,11 +22,13 @@ class FrigoActivity : AppCompatActivity(), AlimentAdapterListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.liste)
-        setUpRecyclerViewDeFrigo()
-        populateRecyclerDeFrigo()
 
         listeUser = intent.getParcelableArrayListExtra<Item>(EXTRA_FRIGO) as ArrayList<Item>
         Log.d("maliste", ""+listeUser)
+        Log.e("test", "Ouiii")
+
+        setUpRecyclerViewDeFrigo()
+        populateRecyclerDeFrigo()
 
         val returnMenu : ImageButton = findViewById(R.id.floatingActionButton2)
         returnMenu.setOnClickListener {
@@ -34,6 +36,16 @@ class FrigoActivity : AppCompatActivity(), AlimentAdapterListener {
             val mainIntent : Intent = Intent(this, MainActivity::class.java)
             startActivity(mainIntent)
             Log.d("TAG", "FrigoAct")
+        }
+
+        val btnIngre : ImageButton = findViewById(R.id.floatingActionButton5)
+        btnIngre.setOnClickListener {
+            val ingredientintent : Intent = Intent(this, IngredientsActivity::class.java).apply {
+                putExtra(EXTRA_FRIGO, listeUser)
+                putExtra(EXTRA_NAME, "frigo")
+            }
+            startActivity(ingredientintent)
+            Log.d("TAG", "IngreAct")
         }
 
         findViewById<TextView>(R.id.textView2).apply {
@@ -47,9 +59,7 @@ class FrigoActivity : AppCompatActivity(), AlimentAdapterListener {
     }
     private fun populateRecyclerDeFrigo() {
         //val aliments = getList()
-        BDD.read(id.getId(),"frigo").observe(this, Observer { listeUserTemp ->
-            adapter.setData(listeUserTemp)
-        })
+        adapter.setData(listeUser)
         //adapter.setData(aliments)
     }
 /*    private fun getList(): ArrayList<Item> {

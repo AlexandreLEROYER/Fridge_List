@@ -111,7 +111,15 @@ class MainActivity : AppCompatActivity(), MenuAdapterListener{
     }
     private fun populateRecyclerDeMenu() {
         BDD.findList(id.getId()).observe(this,Observer{ listUserTemp ->
+            var listUserTemp2 = listUserTemp
+            for(element in listUserTemp){
+                if(element == "frigo"){
+                    //listUserTemp2.remove(element)
+                    Log.d("frigo", "present")
+                }
+            }
             adapter.setData(listUserTemp)
+            Log.d("frigo", "present")
         })
     }
 
