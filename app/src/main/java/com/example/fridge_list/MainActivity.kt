@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity(), MenuAdapterListener{
     fun suiteProg() {
         setUpRecyclerViewDeMenu()
         populateRecyclerDeMenu()
+
         val viewMenu : ImageButton = findViewById(R.id.imageButton3)
         viewMenu.setOnClickListener {
             BDD.read(id.getId(), "frigo").observe(this, Observer { listeUserTemp ->
@@ -115,11 +116,14 @@ class MainActivity : AppCompatActivity(), MenuAdapterListener{
     }
 
     override fun onUserClicked(list: String) {
-        //Toast.makeText(this, "You cliked on : list Toast.LENGTH_SHORT).show()
-
-        println("onpasseici")
+        BDD.read(id.getId(), list).observe(this, Observer { listeUserTemp ->
+            val listIntent: Intent = Intent(this, ListActivity::class.java).apply {
+                putExtra(EXTRA_LIST, listeUserTemp)
+                putExtra(EXTRA_NAME, list)
+            }
+            startActivity(listIntent)
+        })
     }
-
 
 }
 interface AlimentAdapterListener {
