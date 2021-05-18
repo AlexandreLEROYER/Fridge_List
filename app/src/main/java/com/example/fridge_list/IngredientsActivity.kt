@@ -117,24 +117,26 @@ class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
 
         qtList.setPositiveButton("Ajouter",
             DialogInterface.OnClickListener { dialog, which ->
-                var qt = Integer.parseInt(qtField.text.toString())
+                if(qtField.text.toString() != ""){
+                    var qt = Integer.parseInt(qtField.text.toString())
 
-                if (qt == 0) {
-                    Toast.makeText(applicationContext,
-                        "Tu n'as rien ajouté",
-                        Toast.LENGTH_SHORT).show()
-                } else {
-                    var x = 0
-                    for(i in listeUser){
-                        if(i.id == ingredient.id){
-                            i.qt = i.qt + qt
-                            x = 1
+                    if (qt == 0) {
+                        Toast.makeText(applicationContext,
+                            "Tu n'as rien ajouté",
+                            Toast.LENGTH_SHORT).show()
+                    } else {
+                        var x = 0
+                        for(i in listeUser){
+                            if(i.id == ingredient.id){
+                                i.qt = i.qt + qt
+                                x = 1
+                            }
                         }
+                        if (x == 0){
+                            listeUser.add(Item(ingredient.id, qt))
+                        }
+                        Log.d("nnn", ""+listeUser)
                     }
-                    if (x == 0){
-                        listeUser.add(Item(ingredient.id, qt))
-                    }
-                    Log.d("nnn", ""+listeUser)
                 }
             })
         qtList.setNegativeButton("Annuler", DialogInterface.OnClickListener { dialog, which ->

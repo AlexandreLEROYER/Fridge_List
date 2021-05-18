@@ -123,6 +123,5 @@ class FrigoActivity : AppCompatActivity(), AlimentAdapterListener {
                 populateRecyclerDeFrigo()
              })
         qtList.show()
-        //listeUser.remove(item)
     }
 }
