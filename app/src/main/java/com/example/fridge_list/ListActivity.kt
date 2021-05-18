@@ -25,7 +25,6 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
         setContentView(R.layout.liste)
 
         listeUser = intent.getParcelableArrayListExtra<Item>(EXTRA_LIST) as ArrayList<Item>
-        Log.d("Listtt", ""+listeUser)
 
         val name = intent.getStringExtra(EXTRA_NAME).toString()
         findViewById<TextView>(R.id.textView2).apply {
@@ -39,7 +38,6 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
             BDD.write(id.getId(), name, listeUser)
             val mainIntent : Intent = Intent(this, MainActivity::class.java)
             startActivity(mainIntent)
-            Log.d("TAG", "FrigoAct")
         }
 
         val btnDel : ImageButton = findViewById(R.id.floatingActionButton3)
@@ -47,7 +45,6 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
             BDD.remove(id.getId(), name)
             val mainIntent : Intent = Intent(this, MainActivity::class.java)
             startActivity(mainIntent)
-            Log.d("TAG", "FrigoAct")
         }
         val btnIngre : ImageButton = findViewById(R.id.floatingActionButton5)
         btnIngre.setOnClickListener {
@@ -56,19 +53,7 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
                 putExtra(EXTRA_NAME, name)
             }
             startActivity(ingredientintent)
-            Log.d("TAG", "IngreAct")
         }
-        /*val viewMenu : ImageButton = findViewById(R.id.imageButton6)
-        viewMenu.setOnClickListener {
-            var listTemp = listeUser
-            BDD.read(id.getId(),"frigo").observe(this, Observer { listeUserTemp ->
-                for(elem in listeUserTemp){
-                    listTemp.add(elem)
-                }
-                BDD.write(id.getId(), "frigo", listTemp)
-            })
-
-        }*/
 
     }
 

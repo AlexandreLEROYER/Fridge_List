@@ -37,7 +37,7 @@
         android:padding="10dp"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"
-        app:srcCompat="@drawable/iconfinder_refrigerator_2_753114"
+        app:srcCompat="@drawable/frigo_fond_blanc"
         tools:layout_editor_absoluteX="42dp"
         tools:layout_editor_absoluteY="580dp"
         tools:ignore="MissingConstraints" />

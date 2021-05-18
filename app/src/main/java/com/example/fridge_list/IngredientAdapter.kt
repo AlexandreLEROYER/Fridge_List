@@ -14,9 +14,6 @@ class IngredientAdapter(private val listener: IngredientAdapterListener) : Recyc
     private var data: ArrayList<Ingredient> = ArrayList<Ingredient>()
     fun setData(data: ArrayList<Ingredient>) {
         this.data = data
-        Log.d("DATA", "" + data)
-        println(data.size)
-        println(data)
         notifyDataSetChanged()
     }
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

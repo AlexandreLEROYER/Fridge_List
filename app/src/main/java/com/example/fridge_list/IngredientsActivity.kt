@@ -37,10 +37,6 @@ class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
             listeUser = intent.getParcelableArrayListExtra<Item>(EXTRA_LIST) as ArrayList<Item>
         }
 
-
-        //listeSearch = search("ma")
-        //Log.d("youpi", ""+listeSearch)
-
         val returnList : ImageButton = findViewById(R.id.floatingActionButton2)
         returnList.setOnClickListener {
             if(name == "frigo"){
@@ -48,7 +44,6 @@ class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
                 val Activite : Intent = Intent(this, FrigoActivity::class.java).apply {
                     putExtra(EXTRA_FRIGO, listeUser)
                 }
-                Log.e("test", "Ouiii")
                 startActivity(Activite)
             }
             else{
@@ -60,12 +55,8 @@ class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
                 startActivity(Activite)
             }
         }
-
-
         var texte: EditText = findViewById(R.id.edittext)
         texte.addTextChangedListener(textwatcher)
-
-
     }
 
     fun search(name : String) : ArrayList<Ingredient> {
@@ -137,7 +128,6 @@ class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
                         if (x == 0){
                             listeUser.add(Item(ingredient.id, qt))
                         }
-                        Log.d("nnn", ""+listeUser)
                     }
                 }
             })

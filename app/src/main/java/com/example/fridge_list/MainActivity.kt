@@ -30,20 +30,6 @@ class MainActivity : AppCompatActivity(), MenuAdapterListener{
         setContentView(R.layout.menu)
         id.receiveId(this)
 
-        ///TEST///
-        /*var liste : ArrayList<Item> = ArrayList<Item>()
-        liste.add(Item(1, 5))
-        liste.add(Item(2, 3))
-        BDD.write(id.getId(), "Liste1", liste)
-        var listeUser = ArrayList<Item>()
-
-        BDD.read(id.getId(),"Liste1").observe(this, Observer { listeUserTemp ->
-            listeUser = listeUserTemp
-            Log.d("youpi", ""+listeUser)
-        })
-
-        })*/
-        ///FinTest///
         BDD.readIngredient().observe(this, Observer { listeIngredientTemp ->
             Log.d("youpi", "" + BDD.listeIngredientAll)
             suiteProg()
@@ -103,8 +89,6 @@ class MainActivity : AppCompatActivity(), MenuAdapterListener{
                 Toast.makeText(applicationContext, "Miskina", Toast.LENGTH_SHORT).show()
             })
             nameList.show()
-
-            Log.d("TAG", "ListAct")
         }
     }
     private fun setUpRecyclerViewDeMenu() {

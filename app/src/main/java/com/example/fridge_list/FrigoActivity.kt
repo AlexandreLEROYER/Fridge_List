@@ -28,8 +28,6 @@ class FrigoActivity : AppCompatActivity(), AlimentAdapterListener {
         setContentView(R.layout.liste)
 
         listeUser = intent.getParcelableArrayListExtra<Item>(EXTRA_FRIGO) as ArrayList<Item>
-        Log.d("maliste", ""+listeUser)
-        Log.e("test", "Ouiii")
 
         setUpRecyclerViewDeFrigo()
         populateRecyclerDeFrigo()
@@ -39,7 +37,6 @@ class FrigoActivity : AppCompatActivity(), AlimentAdapterListener {
             BDD.write(id.getId(), "frigo", listeUser)
             val mainIntent : Intent = Intent(this, MainActivity::class.java)
             startActivity(mainIntent)
-            Log.d("TAG", "FrigoAct")
         }
 
         val btnIngre : ImageButton = findViewById(R.id.floatingActionButton5)
@@ -49,7 +46,6 @@ class FrigoActivity : AppCompatActivity(), AlimentAdapterListener {
                 putExtra(EXTRA_NAME, "frigo")
             }
             startActivity(ingredientintent)
-            Log.d("TAG", "IngreAct")
         }
 
         val btnDel : ImageButton = findViewById(R.id.floatingActionButton3)
@@ -57,7 +53,6 @@ class FrigoActivity : AppCompatActivity(), AlimentAdapterListener {
             BDD.remove(id.getId(), "frigo")
             val mainIntent : Intent = Intent(this, MainActivity::class.java)
             startActivity(mainIntent)
-            Log.d("TAG", "FrigoAct")
         }
 
         findViewById<TextView>(R.id.textView2).apply {
@@ -70,21 +65,9 @@ class FrigoActivity : AppCompatActivity(), AlimentAdapterListener {
         recyclerView.adapter = adapter
     }
     private fun populateRecyclerDeFrigo() {
-        //val aliments = getList()
         adapter.setData(listeUser)
-        //adapter.setData(aliments)
     }
-/*    private fun getList(): ArrayList<Item> {
-        val aliments = ArrayList<Item>()
-        aliments.add(Item(3,100))
-        aliments.add(Item(2,50))
-        aliments.add(Item(1,20))
-        aliments.add(Item(50,1100))
-        aliments.add(Item(52,150))
-        aliments.add(Item(51,210))
 
-        return aliments
-    }*/
     override fun onUserClicked(item: Item) {
         val qtList : AlertDialog.Builder = AlertDialog.Builder(this)
         qtList.setTitle("Quantité")
