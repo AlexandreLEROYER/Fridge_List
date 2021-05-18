@@ -57,6 +57,16 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
             startActivity(ingredientintent)
             Log.d("TAG", "IngreAct")
         }
+        val viewMenu : ImageButton = findViewById(R.id.imageButton6)
+        viewMenu.setOnClickListener {
+            BDD.read(id.getId(),"frigo").observe(this, Observer { listeUserTemp ->
+                for(elem in listeUserTemp){
+                    listeUser.add(elem)
+                }
+                BDD.write(id.getId(), "frigo", listeUser)
+            })
+
+        }
 
     }
 

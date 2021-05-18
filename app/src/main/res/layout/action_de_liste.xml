@@ -11,13 +11,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Éléments de la liste"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView4"
-        app:layout_constraintStart_toStartOf="@id/recyclerView4"
+        app:layout_constraintBottom_toTopOf="@+id/liste_actions"
+        app:layout_constraintStart_toStartOf="@id/liste_actions"
         app:layout_constraintTop_toBottomOf="@id/divider"
         app:layout_constraintVertical_bias="0.731" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView4"
+        android:id="@+id/liste_actions"
         android:layout_height="0dp"
         android:layout_width="match_parent"
         android:layout_marginEnd="20dp"
