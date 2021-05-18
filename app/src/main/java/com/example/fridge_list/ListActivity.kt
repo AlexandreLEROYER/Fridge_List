@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
+import android.widget.ListAdapter
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -22,7 +23,6 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.liste)
-        setUpRecyclerViewDeList()
 
         listeUser = intent.getParcelableArrayListExtra<Item>(EXTRA_LIST) as ArrayList<Item>
         Log.d("Listtt", ""+listeUser)
@@ -31,6 +31,7 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
         findViewById<TextView>(R.id.textView2).apply {
             text = name
         }
+        setUpRecyclerViewDeList()
         populateRecyclerDeList(name)
         val returnMenu : ImageButton = findViewById(R.id.floatingActionButton2)
         returnMenu.setOnClickListener {
@@ -49,7 +50,10 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
         }
         val btnIngre : ImageButton = findViewById(R.id.floatingActionButton5)
         btnIngre.setOnClickListener {
-            val ingredientintent : Intent = Intent(this, IngredientsActivity::class.java)
+            val ingredientintent : Intent = Intent(this, IngredientsActivity::class.java).apply {
+                putExtra(EXTRA_LIST, listeUser)
+                putExtra(EXTRA_NAME, name)
+            }
             startActivity(ingredientintent)
             Log.d("TAG", "IngreAct")
         }
@@ -61,21 +65,20 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
         recyclerView.layoutManager = GridLayoutManager(this, 3)
         recyclerView.adapter = adapter
     }
+
+    private fun resetAdapterState() {
+
+    }
+
     private fun populateRecyclerDeList(name : String) {
         BDD.read(id.getId(),name).observe(this, Observer { listeUserTemp ->
             adapter.setData(listeUserTemp)
         })
     }
-    private fun getList(): ArrayList<Item> {
-        val aliments = ArrayList<Item>()
-        aliments.add(Item(50,1100))
-        aliments.add(Item(52,150))
-        aliments.add(Item(51,210))
 
-        return aliments
-    }
     override fun onUserClicked(item: Item) {
-
+        listeUser.remove(item)
+        Log.d("supp", ""+item)
     }
 
 }
