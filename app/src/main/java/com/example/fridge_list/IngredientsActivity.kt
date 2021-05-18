@@ -4,12 +4,11 @@ import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputType
+import android.text.TextWatcher
 import android.util.Log
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.SearchView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -60,7 +59,11 @@ class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
             }
         }
 
-        var search : SearchView = findViewById(R.id.search)
+
+        var texte: EditText = findViewById(R.id.edittext)
+        texte.addTextChangedListener(textwatcher)
+
+
     }
 
     fun search(name : String) : ArrayList<Ingredient> {
@@ -78,11 +81,29 @@ class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
         recyclerView.layoutManager = GridLayoutManager(this, 3)
         recyclerView.adapter = adapter
     }
-    private fun populateRecyclerDeIngredient() {
-        adapter.setData(getList())
+    private fun populateRecyclerDeIngredient(listerecherche : ArrayList<Ingredient> = ArrayList<Ingredient>()) {
+        if(listerecherche == ArrayList<Ingredient>()) {
+            adapter.setData(getList())
+        } else {
+            adapter.setData(listerecherche)
+        }
+
     }
     private fun getList(): ArrayList<Ingredient> {
         return BDD.listeIngredientAll
+    }
+    private val textwatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            //
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            populateRecyclerDeIngredient(search(s.toString()))
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            //
+        }
     }
     override fun onUserClicked(ingredient: Ingredient) {
         val qtList : AlertDialog.Builder = AlertDialog.Builder(this)

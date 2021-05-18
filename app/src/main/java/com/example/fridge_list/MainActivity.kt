@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity(), MenuAdapterListener{
         setContentView(R.layout.menu)
         id.receiveId(this)
 
-
         ///TEST///
         /*var liste : ArrayList<Item> = ArrayList<Item>()
         liste.add(Item(1, 5))
@@ -118,7 +117,7 @@ class MainActivity : AppCompatActivity(), MenuAdapterListener{
                     Log.d("frigo", "present")
                 }
             }
-            adapter.setData(listUserTemp)
+            adapter.setData(listUserTemp2)
             Log.d("frigo", "present")
         })
     }

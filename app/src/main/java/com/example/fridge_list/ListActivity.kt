@@ -66,9 +66,6 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
         recyclerView.adapter = adapter
     }
 
-    private fun resetAdapterState() {
-
-    }
 
     private fun populateRecyclerDeList() {
         adapter.setData(listeUser)
