@@ -64,8 +64,7 @@ class FrigoActivity : AppCompatActivity(), AlimentAdapterListener {
         return aliments
     }*/
     override fun onUserClicked(item: Item) {
-        Toast.makeText(this, "You cliked on : ${item.id}", Toast.LENGTH_SHORT).show()
-
-        println("onpasseici")
+        listeUser.remove(item)
+        Log.d("supp", ""+item)
     }
 }
