@@ -77,21 +77,26 @@ class MainActivity : AppCompatActivity(), MenuAdapterListener{
             nameList.setPositiveButton("Confirmer",
                 DialogInterface.OnClickListener { dialog, which ->
                     var name = nameField.text.toString()
-
-                    if (name == "") {
+                    if(name.contains(".") || name.contains("#") || name.contains("[") || name.contains("]")) {
                         Toast.makeText(applicationContext,
-                            "Il faut donner un nom gros",
-                            Toast.LENGTH_SHORT).show()
-                    } else {
-                        BDD.read(id.getId(), name).observe(this, Observer { listeUserTemp ->
-                            val listIntent: Intent = Intent(this, ListActivity::class.java).apply {
-                                putExtra(EXTRA_LIST, listeUserTemp)
-                                putExtra(EXTRA_NAME, name)
-                            }
-                            startActivity(listIntent)
-                            Toast.makeText(applicationContext, "Liste créée bg", Toast.LENGTH_SHORT)
-                                .show()
-                        })
+                            "Le nom ne peut pas contenir . , # , [ ou ]",
+                            Toast.LENGTH_LONG).show()
+                    }else{
+                        if (name == "") {
+                            Toast.makeText(applicationContext,
+                                "Il faut donner un nom gros",
+                                Toast.LENGTH_SHORT).show()
+                        } else {
+                            BDD.read(id.getId(), name).observe(this, Observer { listeUserTemp ->
+                                val listIntent: Intent = Intent(this, ListActivity::class.java).apply {
+                                    putExtra(EXTRA_LIST, listeUserTemp)
+                                    putExtra(EXTRA_NAME, name)
+                                }
+                                startActivity(listIntent)
+                                Toast.makeText(applicationContext, "Liste créée bg", Toast.LENGTH_SHORT)
+                                    .show()
+                            })
+                        }
                     }
                 })
             nameList.setNegativeButton("Annuler", DialogInterface.OnClickListener { dialog, which ->

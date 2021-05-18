@@ -33,6 +33,7 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
         }
         setUpRecyclerViewDeList()
         populateRecyclerDeList()
+
         val returnMenu : ImageButton = findViewById(R.id.floatingActionButton2)
         returnMenu.setOnClickListener {
             BDD.write(id.getId(), name, listeUser)
@@ -57,16 +58,17 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
             startActivity(ingredientintent)
             Log.d("TAG", "IngreAct")
         }
-        val viewMenu : ImageButton = findViewById(R.id.imageButton6)
+        /*val viewMenu : ImageButton = findViewById(R.id.imageButton6)
         viewMenu.setOnClickListener {
+            var listTemp = listeUser
             BDD.read(id.getId(),"frigo").observe(this, Observer { listeUserTemp ->
                 for(elem in listeUserTemp){
-                    listeUser.add(elem)
+                    listTemp.add(elem)
                 }
-                BDD.write(id.getId(), "frigo", listeUser)
+                BDD.write(id.getId(), "frigo", listTemp)
             })
 
-        }
+        }*/
 
     }
 
