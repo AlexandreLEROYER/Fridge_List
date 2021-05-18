@@ -44,6 +44,7 @@ class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
         val returnList : ImageButton = findViewById(R.id.floatingActionButton2)
         returnList.setOnClickListener {
             if(name == "frigo"){
+                BDD.write(id.getId(), "frigo", listeUser)
                 val Activite : Intent = Intent(this, FrigoActivity::class.java).apply {
                     putExtra(EXTRA_FRIGO, listeUser)
                 }
@@ -51,6 +52,7 @@ class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
                 startActivity(Activite)
             }
             else{
+                BDD.write(id.getId(), name, listeUser)
                 val Activite : Intent = Intent(this, ListActivity::class.java).apply {
                     putExtra(EXTRA_LIST, listeUser)
                     putExtra(EXTRA_NAME, name)
