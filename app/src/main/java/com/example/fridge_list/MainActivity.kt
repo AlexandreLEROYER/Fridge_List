@@ -109,16 +109,11 @@ class MainActivity : AppCompatActivity(), MenuAdapterListener{
         recyclerView.adapter = adapter
     }
     private fun populateRecyclerDeMenu() {
-        BDD.findList(id.getId()).observe(this,Observer{ listUserTemp ->
-            var listUserTemp2 = listUserTemp
-            for(element in listUserTemp){
-                if(element == "frigo"){
-                    listUserTemp2.remove(element)
-                    Log.d("frigo", "present")
-                }
+        BDD.findList(id.getId()).observe(this, Observer { listUserTemp ->
+            if (listUserTemp.contains("frigo")) {
+                listUserTemp.remove("frigo")
             }
-            adapter.setData(listUserTemp2)
-            Log.d("frigo", "present")
+            adapter.setData(listUserTemp)
         })
     }
 
