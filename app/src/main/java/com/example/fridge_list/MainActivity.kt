@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity(), MenuAdapterListener{
         setContentView(R.layout.menu)
         id.receiveId(this)
 
-
         ///TEST///
         /*var liste : ArrayList<Item> = ArrayList<Item>()
         liste.add(Item(1, 5))
@@ -114,11 +113,11 @@ class MainActivity : AppCompatActivity(), MenuAdapterListener{
             var listUserTemp2 = listUserTemp
             for(element in listUserTemp){
                 if(element == "frigo"){
-                    //listUserTemp2.remove(element)
+                    listUserTemp2.remove(element)
                     Log.d("frigo", "present")
                 }
             }
-            adapter.setData(listUserTemp)
+            adapter.setData(listUserTemp2)
             Log.d("frigo", "present")
         })
     }

@@ -1,19 +1,20 @@
 package com.example.fridge_list
 
-import com.example.model.Ingredient
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.model.Ingredient
+
 
 
 class IngredientAdapter(private val listener: IngredientAdapterListener) : RecyclerView.Adapter<IngredientAdapter.ViewHolder>() {
     private var data: ArrayList<Ingredient> = ArrayList<Ingredient>()
-    fun setData(data: ArrayList<Ingredient> ) {
+    fun setData(data: ArrayList<Ingredient>) {
         this.data = data
-        Log.d("DATA",""+data)
+        Log.d("DATA", "" + data)
         println(data.size)
         println(data)
         notifyDataSetChanged()
