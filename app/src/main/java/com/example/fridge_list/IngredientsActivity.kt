@@ -103,23 +103,12 @@ class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
                         "Tu n'as rien ajouté",
                         Toast.LENGTH_SHORT).show()
                 } else {
-                    var x = 0
-                    Log.d("ouepp", ""+ingredient.id)
-                    for(i in listeUser){
-                        Log.d("ouepp", "ob")
+                    /*for(i in listeUser){
                         if(i.id == ingredient.id){
                             i.qt = i.qt + qt
-                            Log.d("mangue1", "oui")
                         }
-                        else{
-                            if(x == 0){
-                                x = 1
-                                listeUser.add(Item(ingredient.id, qt))
-                                Log.d("ouepp", ""+ingredient.id)
-                            }
-                            Log.d("ouepp", ""+ingredient.id)
-                        }
-                    }
+                    }*/
+                    listeUser.add(Item(ingredient.id, qt))
                     Log.d("nnn", ""+listeUser)
                 }
             })
