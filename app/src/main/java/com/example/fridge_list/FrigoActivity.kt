@@ -48,6 +48,14 @@ class FrigoActivity : AppCompatActivity(), AlimentAdapterListener {
             Log.d("TAG", "IngreAct")
         }
 
+        val btnDel : ImageButton = findViewById(R.id.floatingActionButton3)
+        btnDel.setOnClickListener {
+            BDD.remove(id.getId(), "frigo")
+            val mainIntent : Intent = Intent(this, MainActivity::class.java)
+            startActivity(mainIntent)
+            Log.d("TAG", "FrigoAct")
+        }
+
         findViewById<TextView>(R.id.textView2).apply {
             text = "Frigo"
         }
@@ -75,6 +83,8 @@ class FrigoActivity : AppCompatActivity(), AlimentAdapterListener {
     }*/
     override fun onUserClicked(item: Item) {
         listeUser.remove(item)
+        setUpRecyclerViewDeFrigo()
+        populateRecyclerDeFrigo()
         Log.d("supp", ""+item)
     }
 }
