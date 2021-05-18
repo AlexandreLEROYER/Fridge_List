@@ -31,19 +31,33 @@ class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
         setUpRecyclerViewDeIngredient()
 
         populateRecyclerDeIngredient()
-        listeUser = intent.getParcelableArrayListExtra<Item>(EXTRA_LIST) as ArrayList<Item>
         val name = intent.getStringExtra(EXTRA_NAME).toString()
+        if(name == "frigo"){
+            listeUser = intent.getParcelableArrayListExtra<Item>(EXTRA_FRIGO) as ArrayList<Item>
+        }else{
+            listeUser = intent.getParcelableArrayListExtra<Item>(EXTRA_LIST) as ArrayList<Item>
+        }
 
-        listeSearch = search("ma")
-        Log.d("youpi", ""+listeSearch)
+
+        //listeSearch = search("ma")
+        //Log.d("youpi", ""+listeSearch)
 
         val returnList : ImageButton = findViewById(R.id.floatingActionButton2)
         returnList.setOnClickListener {
-            val ListIntent : Intent = Intent(this, ListActivity::class.java).apply {
-                putExtra(EXTRA_LIST, listeUser)
-                putExtra(EXTRA_NAME, name)
+            if(name == "frigo"){
+                val Activite : Intent = Intent(this, FrigoActivity::class.java).apply {
+                    putExtra(EXTRA_FRIGO, listeUser)
+                }
+                Log.e("test", "Ouiii")
+                startActivity(Activite)
             }
-            startActivity(ListIntent)
+            else{
+                val Activite : Intent = Intent(this, ListActivity::class.java).apply {
+                    putExtra(EXTRA_LIST, listeUser)
+                    putExtra(EXTRA_NAME, name)
+                }
+                startActivity(Activite)
+            }
         }
 
         var search : SearchView = findViewById(R.id.search)
@@ -89,7 +103,16 @@ class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
                         "Tu n'as rien ajouté",
                         Toast.LENGTH_SHORT).show()
                 } else {
-                    listeUser.add(Item(ingredient.id, qt))
+                    var x = 0
+                    for(i in listeUser){
+                        if(i.id == ingredient.id){
+                            i.qt = i.qt + qt
+                            x = 1
+                        }
+                    }
+                    if (x == 0){
+                        listeUser.add(Item(ingredient.id, qt))
+                    }
                     Log.d("nnn", ""+listeUser)
                 }
             })

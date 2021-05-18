@@ -32,7 +32,7 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
             text = name
         }
         setUpRecyclerViewDeList()
-        populateRecyclerDeList(name)
+        populateRecyclerDeList()
         val returnMenu : ImageButton = findViewById(R.id.floatingActionButton2)
         returnMenu.setOnClickListener {
             BDD.write(id.getId(), name, listeUser)
@@ -70,14 +70,14 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
 
     }
 
-    private fun populateRecyclerDeList(name : String) {
-        BDD.read(id.getId(),name).observe(this, Observer { listeUserTemp ->
-            adapter.setData(listeUserTemp)
-        })
+    private fun populateRecyclerDeList() {
+        adapter.setData(listeUser)
     }
 
     override fun onUserClicked(item: Item) {
         listeUser.remove(item)
+        setUpRecyclerViewDeList()
+        populateRecyclerDeList()
         Log.d("supp", ""+item)
     }
 
