@@ -1,12 +1,15 @@
 package com.example.fridge_list
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputType
+import android.text.TextWatcher
 import android.util.Log
-import android.widget.ImageButton
-import android.widget.SearchView
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +21,7 @@ import com.example.model.id
 class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
 
     var listeSearch = ArrayList<Ingredient>()
+    var listeUser = ArrayList<Item>()
     private val adapter = IngredientAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,21 +30,40 @@ class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
         setUpRecyclerViewDeIngredient()
 
         populateRecyclerDeIngredient()
-        var espoire = BDD.findName(1)
-
-        Log.d("Leboncul", ""+espoire.nom)
-
-        listeSearch = search("ma")
-        Log.d("youpi", ""+listeSearch)
-
-        val returnMenu : ImageButton = findViewById(R.id.floatingActionButton2)
-        returnMenu.setOnClickListener {
-            val mainIntent : Intent = Intent(this, MainActivity::class.java)
-            startActivity(mainIntent)
-            Log.d("TAG", "IngreAct")
+        val name = intent.getStringExtra(EXTRA_NAME).toString()
+        if(name == "frigo"){
+            listeUser = intent.getParcelableArrayListExtra<Item>(EXTRA_FRIGO) as ArrayList<Item>
+        }else{
+            listeUser = intent.getParcelableArrayListExtra<Item>(EXTRA_LIST) as ArrayList<Item>
         }
 
-        var search : SearchView = findViewById(R.id.search)
+
+        //listeSearch = search("ma")
+        //Log.d("youpi", ""+listeSearch)
+
+        val returnList : ImageButton = findViewById(R.id.floatingActionButton2)
+        returnList.setOnClickListener {
+            if(name == "frigo"){
+                val Activite : Intent = Intent(this, FrigoActivity::class.java).apply {
+                    putExtra(EXTRA_FRIGO, listeUser)
+                }
+                Log.e("test", "Ouiii")
+                startActivity(Activite)
+            }
+            else{
+                val Activite : Intent = Intent(this, ListActivity::class.java).apply {
+                    putExtra(EXTRA_LIST, listeUser)
+                    putExtra(EXTRA_NAME, name)
+                }
+                startActivity(Activite)
+            }
+        }
+
+
+        var texte: EditText = findViewById(R.id.edittext)
+        texte.addTextChangedListener(textwatcher)
+
+
     }
 
     fun search(name : String) : ArrayList<Ingredient> {
@@ -58,16 +81,68 @@ class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
         recyclerView.layoutManager = GridLayoutManager(this, 3)
         recyclerView.adapter = adapter
     }
-    private fun populateRecyclerDeIngredient() {
-        adapter.setData(getList())
+    private fun populateRecyclerDeIngredient(listerecherche : ArrayList<Ingredient> = ArrayList<Ingredient>()) {
+        if(listerecherche == ArrayList<Ingredient>()) {
+            adapter.setData(getList())
+        } else {
+            adapter.setData(listerecherche)
+        }
+
     }
     private fun getList(): ArrayList<Ingredient> {
         return BDD.listeIngredientAll
     }
-    override fun onUserClicked(ingredient: Ingredient) {
-        //Toast.makeText(this, "You clicked on : $ingredient", Toast.LENGTH_SHORT).show()
+    private val textwatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            //
+        }
 
-        println("onpasseici")
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            populateRecyclerDeIngredient(search(s.toString()))
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            //
+        }
+    }
+    override fun onUserClicked(ingredient: Ingredient) {
+        val qtList : AlertDialog.Builder = AlertDialog.Builder(this)
+        qtList.setTitle("Quantité")
+        qtList.setMessage("Rentrez une quantité")
+
+        val qtField : EditText = EditText(this)
+        qtField.hint = "0"
+        qtField.inputType = InputType.TYPE_CLASS_NUMBER
+        qtList.setView(qtField)
+
+        qtList.setPositiveButton("Ajouter",
+            DialogInterface.OnClickListener { dialog, which ->
+                if(qtField.text.toString() != ""){
+                    var qt = Integer.parseInt(qtField.text.toString())
+
+                    if (qt == 0) {
+                        Toast.makeText(applicationContext,
+                            "Tu n'as rien ajouté",
+                            Toast.LENGTH_SHORT).show()
+                    } else {
+                        var x = 0
+                        for(i in listeUser){
+                            if(i.id == ingredient.id){
+                                i.qt = i.qt + qt
+                                x = 1
+                            }
+                        }
+                        if (x == 0){
+                            listeUser.add(Item(ingredient.id, qt))
+                        }
+                        Log.d("nnn", ""+listeUser)
+                    }
+                }
+            })
+        qtList.setNegativeButton("Annuler", DialogInterface.OnClickListener { dialog, which ->
+            Toast.makeText(applicationContext, "Miskina", Toast.LENGTH_SHORT).show()
+        })
+        qtList.show()
     }
 
 }

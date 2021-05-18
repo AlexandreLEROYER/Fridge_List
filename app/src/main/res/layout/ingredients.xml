@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/abc_vector_test" />
 
     <androidx.recyclerview.widget.RecyclerView
-        app:layout_constraintTop_toBottomOf="@id/search"
+        app:layout_constraintTop_toBottomOf="@id/edittext"
         app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/recycleringredient"
         android:layout_width="match_parent"
@@ -49,13 +49,13 @@
         tools:layout_editor_absoluteX="6dp"
         tools:layout_editor_absoluteY="85dp" />
 
-    <SearchView
-        android:id="@+id/search"
-        android:layout_width="0dp"
+    <EditText
+        android:id="@+id/edittext"
+        android:inputType="text"
         app:layout_constraintTop_toBottomOf="@id/divider"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="50dp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="24dp" />
+        android:layout_width="0dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

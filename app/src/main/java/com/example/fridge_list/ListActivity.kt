@@ -1,12 +1,13 @@
 package com.example.fridge_list
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
-import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +23,6 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.liste)
-        setUpRecyclerViewDeList()
 
         listeUser = intent.getParcelableArrayListExtra<Item>(EXTRA_LIST) as ArrayList<Item>
         Log.d("Listtt", ""+listeUser)
@@ -31,7 +31,8 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
         findViewById<TextView>(R.id.textView2).apply {
             text = name
         }
-        populateRecyclerDeList(name)
+        setUpRecyclerViewDeList()
+        populateRecyclerDeList()
         val returnMenu : ImageButton = findViewById(R.id.floatingActionButton2)
         returnMenu.setOnClickListener {
             BDD.write(id.getId(), name, listeUser)
@@ -49,7 +50,10 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
         }
         val btnIngre : ImageButton = findViewById(R.id.floatingActionButton5)
         btnIngre.setOnClickListener {
-            val ingredientintent : Intent = Intent(this, IngredientsActivity::class.java)
+            val ingredientintent : Intent = Intent(this, IngredientsActivity::class.java).apply {
+                putExtra(EXTRA_LIST, listeUser)
+                putExtra(EXTRA_NAME, name)
+            }
             startActivity(ingredientintent)
             Log.d("TAG", "IngreAct")
         }
@@ -61,21 +65,50 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
         recyclerView.layoutManager = GridLayoutManager(this, 3)
         recyclerView.adapter = adapter
     }
-    private fun populateRecyclerDeList(name : String) {
-        BDD.read(id.getId(),name).observe(this, Observer { listeUserTemp ->
-            adapter.setData(listeUserTemp)
-        })
-    }
-    private fun getList(): ArrayList<Item> {
-        val aliments = ArrayList<Item>()
-        aliments.add(Item(50,1100))
-        aliments.add(Item(52,150))
-        aliments.add(Item(51,210))
 
-        return aliments
+
+    private fun populateRecyclerDeList() {
+        adapter.setData(listeUser)
     }
+
     override fun onUserClicked(item: Item) {
+        val qtList : AlertDialog.Builder = AlertDialog.Builder(this)
+        qtList.setTitle("Quantité")
+        qtList.setMessage("Rentrez une quantité")
 
+        val qtField : EditText = EditText(this)
+        qtField.hint = item.qt.toString()
+        qtField.inputType = InputType.TYPE_CLASS_NUMBER
+        qtList.setView(qtField)
+
+        qtList.setPositiveButton("Appliquer",
+            DialogInterface.OnClickListener { dialog, which ->
+                if(qtField.text.toString() != ""){
+                    var qt = Integer.parseInt(qtField.text.toString())
+
+                    if (qt == 0) {
+                        listeUser.remove(item)
+                        Toast.makeText(applicationContext,
+                            "Tu as supprimé l'ingrédient",
+                            Toast.LENGTH_SHORT).show()
+                    }
+                    if (qt != null){
+                        item.qt = qt
+                    }
+                    setUpRecyclerViewDeList()
+                    populateRecyclerDeList()
+                }
+            })
+        qtList.setNegativeButton("Annuler", DialogInterface.OnClickListener { dialog, which ->
+            Toast.makeText(applicationContext, "Miskina", Toast.LENGTH_SHORT).show()
+        })
+        qtList.setNeutralButton("Supprimer",
+            DialogInterface.OnClickListener { dialog, which ->
+                listeUser.remove(item)
+                setUpRecyclerViewDeList()
+                populateRecyclerDeList()
+            })
+        qtList.show()
     }
 
 }
