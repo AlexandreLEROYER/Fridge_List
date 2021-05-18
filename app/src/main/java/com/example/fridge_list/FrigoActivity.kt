@@ -1,12 +1,16 @@
 package com.example.fridge_list
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -82,9 +86,43 @@ class FrigoActivity : AppCompatActivity(), AlimentAdapterListener {
         return aliments
     }*/
     override fun onUserClicked(item: Item) {
-        listeUser.remove(item)
-        setUpRecyclerViewDeFrigo()
-        populateRecyclerDeFrigo()
-        Log.d("supp", ""+item)
+        val qtList : AlertDialog.Builder = AlertDialog.Builder(this)
+        qtList.setTitle("Quantité")
+        qtList.setMessage("Rentrez une quantité")
+
+        val qtField : EditText = EditText(this)
+        qtField.hint = item.qt.toString()
+        qtField.inputType = InputType.TYPE_CLASS_NUMBER
+        qtList.setView(qtField)
+
+        qtList.setPositiveButton("Appliquer",
+            DialogInterface.OnClickListener { dialog, which ->
+                if(qtField.text.toString() != ""){
+                    var qt = Integer.parseInt(qtField.text.toString())
+
+                    if (qt == 0) {
+                        listeUser.remove(item)
+                        Toast.makeText(applicationContext,
+                            "Tu as supprimé l'ingrédient",
+                            Toast.LENGTH_SHORT).show()
+                    }
+                    if (qt != null){
+                        item.qt = qt
+                    }
+                    setUpRecyclerViewDeFrigo()
+                    populateRecyclerDeFrigo()
+                }
+            })
+        qtList.setNegativeButton("Annuler", DialogInterface.OnClickListener { dialog, which ->
+            Toast.makeText(applicationContext, "Miskina", Toast.LENGTH_SHORT).show()
+        })
+        qtList.setNeutralButton("Supprimer",
+            DialogInterface.OnClickListener { dialog, which ->
+                listeUser.remove(item)
+                setUpRecyclerViewDeFrigo()
+                populateRecyclerDeFrigo()
+             })
+        qtList.show()
+        //listeUser.remove(item)
     }
 }
