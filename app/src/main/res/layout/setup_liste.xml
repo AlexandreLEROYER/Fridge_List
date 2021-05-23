@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_weight="1"
-        android:text="COUCOU"
+        android:text="NomDeListe"
         android:background="#F8F8FF"
         android:maxLines="1"
         android:textSize="30dp"
