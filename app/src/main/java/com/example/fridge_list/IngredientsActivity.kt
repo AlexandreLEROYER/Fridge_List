@@ -7,10 +7,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.controler.BDD
@@ -27,9 +25,11 @@ class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.ingredients)
-        setUpRecyclerViewDeIngredient()
 
+        setUpRecyclerViewDeIngredient()
         populateRecyclerDeIngredient()
+
+        //Récupération de la liste utilisateur + vérification si c'est une liste classique ou le frigo
         val name = intent.getStringExtra(EXTRA_NAME).toString()
         if(name == "frigo"){
             listeUser = intent.getParcelableArrayListExtra<Item>(EXTRA_FRIGO) as ArrayList<Item>
@@ -37,6 +37,7 @@ class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
             listeUser = intent.getParcelableArrayListExtra<Item>(EXTRA_LIST) as ArrayList<Item>
         }
 
+        //On retourne dans la liste avec vérification si c'est une liste classique ou le frigo
         val returnList : ImageButton = findViewById(R.id.floatingActionButton2)
         returnList.setOnClickListener {
             if(name == "frigo"){
@@ -87,7 +88,6 @@ class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
     }
     private val textwatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            //
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -95,15 +95,15 @@ class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
         }
 
         override fun afterTextChanged(s: Editable?) {
-            //
         }
     }
+    //pop-up pour ajouter une quantité
     override fun onUserClicked(ingredient: Ingredient) {
         val qtList : AlertDialog.Builder = AlertDialog.Builder(this)
         qtList.setTitle("Quantité")
         qtList.setMessage("Rentrez une quantité")
 
-        val qtField : EditText = EditText(this)
+        val qtField = EditText(this)
         qtField.hint = "0"
         qtField.inputType = InputType.TYPE_CLASS_NUMBER
         qtList.setView(qtField)
@@ -118,6 +118,7 @@ class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
                             "Tu n'as rien ajouté",
                             Toast.LENGTH_SHORT).show()
                     } else {
+                        //Vérification si l'ingrédient est déjà dans la liste
                         var x = 0
                         for(i in listeUser){
                             if(i.id == ingredient.id){
@@ -136,5 +137,4 @@ class IngredientsActivity : AppCompatActivity(), IngredientAdapterListener  {
         })
         qtList.show()
     }
-
 }

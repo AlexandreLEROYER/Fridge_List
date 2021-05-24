@@ -22,7 +22,6 @@ const val EXTRA_NAME = "com.example.fridge_list.NAME"
 const val EXTRA_FRIGO = "com.example.fridge_list.FRIGO"
 const val EXTRA_LIST = "com.example.fridge_list.LIST"
 
-
 class MainActivity : AppCompatActivity(), MenuAdapterListener{
     private val adapter = MenuAdapter(this)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,15 +29,18 @@ class MainActivity : AppCompatActivity(), MenuAdapterListener{
         setContentView(R.layout.menu)
         id.receiveId(this)
 
+        //Recupération de la liste des ingrédients
         BDD.readIngredient().observe(this, Observer { listeIngredientTemp ->
-            Log.d("youpi", "" + BDD.listeIngredientAll)
             suiteProg()
         })
     }
+
+    //Suite du programme une fois la liste recupérée
     fun suiteProg() {
         setUpRecyclerViewDeMenu()
         populateRecyclerDeMenu()
 
+        //Bouton frigo
         val viewMenu : ImageButton = findViewById(R.id.imageButton3)
         viewMenu.setOnClickListener {
             BDD.read(id.getId(), "frigo").observe(this, Observer { listeUserTemp ->
@@ -49,12 +51,14 @@ class MainActivity : AppCompatActivity(), MenuAdapterListener{
             })
         }
 
+        //Bouton créaction liste avec une pop-up pour le nom
         val viewList : ImageButton = findViewById(R.id.floatingActionButton)
         viewList.setOnClickListener {
             val nameList : AlertDialog.Builder = AlertDialog.Builder(this)
             nameList.setTitle("Nom de la nouvelle liste")
             nameList.setMessage("Rentrez le nom de votre nouvelle liste")
 
+            //Récupération du nom
             val nameField : EditText = EditText(this)
             nameField.hint = "Nouvelle Liste"
             nameField.inputType = InputType.TYPE_CLASS_TEXT
@@ -91,14 +95,17 @@ class MainActivity : AppCompatActivity(), MenuAdapterListener{
             nameList.show()
         }
     }
+
     private fun setUpRecyclerViewDeMenu() {
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView5)
         val ManaLin = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = ManaLin
         recyclerView.adapter = adapter
     }
+
     private fun populateRecyclerDeMenu() {
         BDD.findList(id.getId()).observe(this, Observer { listUserTemp ->
+            //On supprimme la liste frigo de la recycleView (bouton frigo déjà présent)
             if (listUserTemp.contains("frigo")) {
                 listUserTemp.remove("frigo")
             }
@@ -106,6 +113,7 @@ class MainActivity : AppCompatActivity(), MenuAdapterListener{
         })
     }
 
+    //On lance la liste cliquée
     override fun onUserClicked(list: String) {
         BDD.read(id.getId(), list).observe(this, Observer { listeUserTemp ->
             val listIntent: Intent = Intent(this, ListActivity::class.java).apply {
@@ -117,7 +125,7 @@ class MainActivity : AppCompatActivity(), MenuAdapterListener{
     }
 
 }
-interface AlimentAdapterListener {
+interface ItemAdapterListener {
     fun onUserClicked(name: Item)
 }
 interface MenuAdapterListener {

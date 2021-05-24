@@ -5,7 +5,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
@@ -15,40 +14,43 @@ import com.example.controler.BDD
 import com.example.model.Item
 import com.example.model.id
 
-class ListActivity : AppCompatActivity(), AlimentAdapterListener {
+//Classe similaire à FrigoActivity
+class ListActivity : AppCompatActivity(), ItemAdapterListener {
 
     var listeUser : ArrayList<Item> = ArrayList<Item>()
-    private val adapter = AlimentAdapter(this)
+    private val adapter = ItemAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.liste)
 
+        //Recupération de la liste recherchée en base de donnée et de son nom
         listeUser = intent.getParcelableArrayListExtra<Item>(EXTRA_LIST) as ArrayList<Item>
-        Log.d("Listtt", ""+listeUser)
 
         val name = intent.getStringExtra(EXTRA_NAME).toString()
         findViewById<TextView>(R.id.textView2).apply {
             text = name
         }
+        //Créaction de la recycleView
         setUpRecyclerViewDeList()
         populateRecyclerDeList()
 
         val returnMenu : ImageButton = findViewById(R.id.floatingActionButton2)
         returnMenu.setOnClickListener {
             BDD.write(id.getId(), name, listeUser)
-            val mainIntent : Intent = Intent(this, MainActivity::class.java)
+            val mainIntent = Intent(this, MainActivity::class.java)
             startActivity(mainIntent)
-            Log.d("TAG", "FrigoAct")
         }
 
+        //Suppression de la liste
         val btnDel : ImageButton = findViewById(R.id.floatingActionButton3)
         btnDel.setOnClickListener {
             BDD.remove(id.getId(), name)
             val mainIntent : Intent = Intent(this, MainActivity::class.java)
             startActivity(mainIntent)
-            Log.d("TAG", "FrigoAct")
         }
+
+        //Ajout ingrédients
         val btnIngre : ImageButton = findViewById(R.id.floatingActionButton5)
         btnIngre.setOnClickListener {
             val ingredientintent : Intent = Intent(this, IngredientsActivity::class.java).apply {
@@ -56,8 +58,9 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
                 putExtra(EXTRA_NAME, name)
             }
             startActivity(ingredientintent)
-            Log.d("TAG", "IngreAct")
         }
+
+        //Transfert liste vers frigo
         val miseAuFrigoButton : ImageButton = findViewById(R.id.buttonMiseAuFrigo)
         miseAuFrigoButton.setOnClickListener {
             var listTemp = listeUser
@@ -70,14 +73,6 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
                                 ingre, item -> Item(item.id, ingre.qt + item.qt)
                         }
                     }
-                /*for(elem in listTemp){
-                    if(elem in listeUserTemp){
-                        listeUserTemp[elem].qt = listeUserTemp[elem].qt + elem.qt
-                    }
-                    else{
-                        listeUserTemp.add(elem)
-                    }
-                }*/
                 BDD.write(id.getId(), "frigo", listeusertemp as ArrayList<Item>) // obligé de repasser en arraylist d'items
             })
 
@@ -91,11 +86,11 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
         recyclerView.adapter = adapter
     }
 
-
     private fun populateRecyclerDeList() {
         adapter.setData(listeUser)
     }
 
+    //Modification ou suppression d'un item dans la liste
     override fun onUserClicked(item: Item) {
         val qtList : AlertDialog.Builder = AlertDialog.Builder(this)
         qtList.setTitle("Quantité")

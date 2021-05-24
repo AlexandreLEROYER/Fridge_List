@@ -8,8 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.fridge_list.MainActivity
 import java.util.*
 
-const val PREFS_FILENAME = "com.example.fridge_list.prefs"
-
 class id : AppCompatActivity() {
 
     companion object {
@@ -22,22 +20,17 @@ class id : AppCompatActivity() {
                 ActivityMain.getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
             this.idUser = sharedPreferences.getString("identifiant", "-1").toString()
 
+            //Vérification de l'existance de l'id -> Si non existant, on le crée
             if (this.idUser == "-1") {
                 this.idUser = createId()
                 val editor = sharedPreferences.edit()
                 editor.putString("identifiant", this.idUser)
                 editor.apply()
-                Log.d("idUser", "On vient de le créer")
-            } else {
-                Log.d("idUser", "On le recup")
             }
-            Log.d("idUser", this.idUser)
         }
 
         private fun createId(): String {
-            val ourUUID = UUID.randomUUID().toString()
-            Log.d("UUID", ourUUID)
-            return ourUUID
+            return UUID.randomUUID().toString() //Créaction id
         }
 
         fun getId(): String {
