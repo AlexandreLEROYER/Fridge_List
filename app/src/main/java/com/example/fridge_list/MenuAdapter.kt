@@ -13,8 +13,6 @@ class MenuAdapter(private val listener: MenuAdapterListener) : RecyclerView.Adap
 
     fun setData(data: ArrayList<String> ) {
         this.data = data
-        println(data.size)
-        println(data)
         notifyDataSetChanged()
     }
 
