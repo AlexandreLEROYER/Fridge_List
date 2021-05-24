@@ -58,17 +58,30 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
             startActivity(ingredientintent)
             Log.d("TAG", "IngreAct")
         }
-        /*val viewMenu : ImageButton = findViewById(R.id.imageButton6)
-        viewMenu.setOnClickListener {
+        val miseAuFrigoButton : ImageButton = findViewById(R.id.buttonMiseAuFrigo)
+        miseAuFrigoButton.setOnClickListener {
             var listTemp = listeUser
             BDD.read(id.getId(),"frigo").observe(this, Observer { listeUserTemp ->
-                for(elem in listeUserTemp){
-                    listTemp.add(elem)
-                }
-                BDD.write(id.getId(), "frigo", listTemp)
+                val listeusertemp = (listeUserTemp + listeUser)          // on concatène
+                    .groupBy { it.id }                  // on regroupe par nom
+                    .values                               // on prend les valeurs
+                    .map {                                // pour chaque liste
+                        it.reduce {                       // on additionne les qt
+                                ingre, item -> Item(item.id, ingre.qt + item.qt)
+                        }
+                    }
+                /*for(elem in listTemp){
+                    if(elem in listeUserTemp){
+                        listeUserTemp[elem].qt = listeUserTemp[elem].qt + elem.qt
+                    }
+                    else{
+                        listeUserTemp.add(elem)
+                    }
+                }*/
+                BDD.write(id.getId(), "frigo", listeusertemp as ArrayList<Item>) // obligé de repasser en arraylist d'items
             })
 
-        }*/
+        }
 
     }
 
