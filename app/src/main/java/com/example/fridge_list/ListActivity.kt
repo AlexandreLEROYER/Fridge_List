@@ -25,6 +25,7 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
         setContentView(R.layout.liste)
 
         listeUser = intent.getParcelableArrayListExtra<Item>(EXTRA_LIST) as ArrayList<Item>
+        Log.d("Listtt", ""+listeUser)
 
         val name = intent.getStringExtra(EXTRA_NAME).toString()
         findViewById<TextView>(R.id.textView2).apply {
@@ -38,6 +39,7 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
             BDD.write(id.getId(), name, listeUser)
             val mainIntent : Intent = Intent(this, MainActivity::class.java)
             startActivity(mainIntent)
+            Log.d("TAG", "FrigoAct")
         }
 
         val btnDel : ImageButton = findViewById(R.id.floatingActionButton3)
@@ -45,6 +47,7 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
             BDD.remove(id.getId(), name)
             val mainIntent : Intent = Intent(this, MainActivity::class.java)
             startActivity(mainIntent)
+            Log.d("TAG", "FrigoAct")
         }
         val btnIngre : ImageButton = findViewById(R.id.floatingActionButton5)
         btnIngre.setOnClickListener {
@@ -53,6 +56,31 @@ class ListActivity : AppCompatActivity(), AlimentAdapterListener {
                 putExtra(EXTRA_NAME, name)
             }
             startActivity(ingredientintent)
+            Log.d("TAG", "IngreAct")
+        }
+        val miseAuFrigoButton : ImageButton = findViewById(R.id.buttonMiseAuFrigo)
+        miseAuFrigoButton.setOnClickListener {
+            var listTemp = listeUser
+            BDD.read(id.getId(),"frigo").observe(this, Observer { listeUserTemp ->
+                val listeusertemp = (listeUserTemp + listeUser)          // on concatène
+                    .groupBy { it.id }                  // on regroupe par nom
+                    .values                               // on prend les valeurs
+                    .map {                                // pour chaque liste
+                        it.reduce {                       // on additionne les qt
+                                ingre, item -> Item(item.id, ingre.qt + item.qt)
+                        }
+                    }
+                /*for(elem in listTemp){
+                    if(elem in listeUserTemp){
+                        listeUserTemp[elem].qt = listeUserTemp[elem].qt + elem.qt
+                    }
+                    else{
+                        listeUserTemp.add(elem)
+                    }
+                }*/
+                BDD.write(id.getId(), "frigo", listeusertemp as ArrayList<Item>) // obligé de repasser en arraylist d'items
+            })
+
         }
 
     }

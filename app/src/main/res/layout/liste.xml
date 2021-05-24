@@ -45,6 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:borderWidth="0dp"
         android:clickable="true"
         android:backgroundTint="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/divider"
@@ -56,22 +57,18 @@
         app:layout_constraintTop_toBottomOf="@id/floatingActionButton2"
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/white"
-        tools:layout_editor_absoluteX="6dp"
-        tools:layout_editor_absoluteY="85dp" />
+        android:background="@color/white" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton5"
         app:layout_constraintBottom_toTopOf="@id/divider7"
         app:layout_constraintStart_toStartOf="@id/divider5"
         app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/floatingActionButton5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:fabCustomSize="100dp"
         android:clickable="true"
-        app:srcCompat="@android:drawable/ic_input_add"
-        tools:layout_editor_absoluteX="319dp"
-        tools:layout_editor_absoluteY="630dp" />
+        app:srcCompat="@android:drawable/ic_input_add" />
 
     <View
         android:id="@+id/divider5"
@@ -100,5 +97,20 @@
         tools:layout_editor_absoluteY="701dp"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageButton
+        android:id="@+id/buttonMiseAuFrigo"
+        app:layout_constraintBottom_toTopOf="@id/divider7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/divider5"
+        android:background="@color/white"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        app:srcCompat="@drawable/mettre_au_frigo"
+        tools:layout_editor_absoluteX="56dp"
+        tools:layout_editor_absoluteY="573dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
